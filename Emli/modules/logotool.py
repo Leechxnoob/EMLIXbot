@@ -1,6 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
-from Emli import app
+from Emli import pbot as app
 from requests import get
 import os
 import requests
