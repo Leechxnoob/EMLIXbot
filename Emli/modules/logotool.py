@@ -54,10 +54,10 @@ async def logo(client, message):
  m = await client.send_message(message.chat.id, "`⚙️ Creating Your logo..`")
  try:
     text = get_text(message)
-    LOGO_API = f"https://api.single-developers.software/logo?name={text}"
+    LOGO_API = f"https://single-developers.up.railway.app/logo?name={text}"
     randc = (LOGO_API)
     img = Image.open(io.BytesIO(requests.get(randc).content))
-    murl = requests.get(f"https://api.single-developers.software/logo?name={text}").history[1].url
+    murl = requests.get(f"https://single-developers.up.railway.app/logo?name={text}").history[1].url
     fname = "emlibot.png"
     img.save(fname, "png")
     await client.send_photo(message.chat.id, photo=murl, caption = caption.format(message.from_user.mention),
@@ -89,7 +89,7 @@ async def on_off_antiarab(_, message: Message):
         return 
     text = message.text.split(None, 1)[1]
     m = await app.send_message(message.chat.id, "`⚙️ Creating Your logo..`")
-    photo = get(f"https://api.single-developers.software/logohq?name={text}").history[1].url
+    photo = get(f"https://single-developers.up.railway.app/logohq?name={text}").history[1].url
     await app.send_photo(message.chat.id, photo=photo, caption =caption.format(message.from_user.mention),
                  reply_markup=InlineKeyboardMarkup(
             [
@@ -114,7 +114,7 @@ async def on_off_antiarab(_, message: Message):
         return 
     text = message.text.split(None, 1)[1]
     m = await app.send_message(message.chat.id, "`⚙️ creating Your text..`")
-    API = "https://api.single-developers.software/write"
+    API = "https://single-developers.up.railway.app/write"
     body = {     
      "text":f"{text}"     
     }
@@ -144,7 +144,7 @@ async def on_off_antiarab(_, message: Message):
         return 
     text = message.text.split(None, 1)[1]
     m=await app.send_message(message.chat.id, "`⚙️ Creating Your wall..`")
-    photo = get(f"https://api.single-developers.software/wallpaper?search={text}").history[1].url
+    photo = get(f"https://single-developers.up.railway.app/wallpaper?search={text}").history[1].url
     await app.send_photo(message.chat.id, photo=photo, caption=caption.format(message.from_user.mention),
                  reply_markup=InlineKeyboardMarkup(
             [
