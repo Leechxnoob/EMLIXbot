@@ -5,10 +5,10 @@ This is part of @szrosebot so don't change anything....
 
 import asyncio
 from pyrogram import filters
-from rose import app
+from Emli import pbot as app
 from pyrogram.types import Message
 from Emli import eor
-from Emli.core.decorators.errors import capture_err
+from Emli.utils.errors import capture_err
 
 active_channel = []
 
