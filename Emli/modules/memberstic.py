@@ -1,7 +1,7 @@
 from pyrogram import filters
 from pyrogram.types import Message
 from Emli import pbot as app,eor
-from Emli.core.decorators.errors import capture_err
+from Emli.utils.errors import capture_err
 from pyrogram import filters
 
 __MODULE__ = "Member Sticker"
