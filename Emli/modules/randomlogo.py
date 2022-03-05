@@ -23,7 +23,7 @@ import random
 import requests
 from pyrogram import filters
 from Emli import pbot
-from Emli.utils.pluginhelpers import get_text, admins_only
+from Emli.utils.pluginhelper import get_text, admins_only
 
 def download_images(images): 
     count = 0
