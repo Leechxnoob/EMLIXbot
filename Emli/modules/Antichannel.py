@@ -79,4 +79,4 @@ your groups to stop anonymous channels sending messages into your chats.
  × /antichannel [on / off] - Anti- channel  function 
 **Note** : If linked_channel  send any containing characters in this type when on  function no del    
  """
-__basic_cmds__ = __HELP__
+
