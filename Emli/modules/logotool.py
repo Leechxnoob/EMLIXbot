@@ -199,4 +199,4 @@ __HELP__ = """
 ×  /slogo [TEXT] : New Beautiful trending logo
 ×  /rlogo [TEXT] : Creating rendom logo
  """
-__advtools__ = __HELP__
+
