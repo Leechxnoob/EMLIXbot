@@ -1,16 +1,17 @@
 import os
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
-from info import IMDB_TEMPLATE
-from utils import extract_user, get_file_id, get_poster, last_online
+from Emli import IMDB_TEMPLATE
+from Emli.utils.utilsx import extract_user, get_file_id, get_poster, last_online
 import time
+from Emli import pbot
 from datetime import datetime
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
 
-@Client.on_message(filters.command('id'))
+@pbot.on_message(filters.command('id'))
 async def showid(client, message):
     chat_type = message.chat.type
     if chat_type == "private":
@@ -54,7 +55,7 @@ async def showid(client, message):
             quote=True
         )
 
-@Client.on_message(filters.command(["info"]))
+@pbot.on_message(filters.command(["info"]))
 async def who_is(client, message):
     # https://github.com/SpEcHiDe/PyroGramBot/blob/master/pyrobot/plugins/admemes/whois.py#L19
     status_message = await message.reply_text(
@@ -127,7 +128,7 @@ async def who_is(client, message):
         )
     await status_message.delete()
 
-@Client.on_message(filters.command(["imdb", 'search']))
+@pbot.on_message(filters.command(["imdb", 'search']))
 async def imdb_search(client, message):
     if ' ' in message.text:
         k = await message.reply('Searching ImDB')
@@ -148,7 +149,7 @@ async def imdb_search(client, message):
     else:
         await message.reply('Give me a movie / series Name')
 
-@Client.on_callback_query(filters.regex('^imdb'))
+@pbot.on_callback_query(filters.regex('^imdb'))
 async def imdb_callback(bot: Client, quer_y: CallbackQuery):
     i, movie = quer_y.data.split('#')
     imdb = await get_poster(query=movie, id=True)
