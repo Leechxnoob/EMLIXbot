@@ -109,7 +109,7 @@ if ENV:
     ARQ_API_URL = "http://thearq.tech/"
     ARQ_API_KEY = ARQ_API
     IMDB_TEMPLATE = os.environ.get("IMDB_TEMPLATE", "<b>Query: {query}</b> \n‌IMDb Data:\n\n🏷 Title: <a href={url}>{title}</a>\n🎭 Genres: {genres}\n📆 Year: <a href={url}/releaseinfo>{year}</a>\n🌟 Rating: <a href={url}/ratings>{rating}</a> / 10")
-    LONG_IMDB_DESCRIPTION = os.environ.get("LONG_IMDB_DESCRIPTION", "False"), False)
+    LONG_IMDB_DESCRIPTION = os.environ.get("LONG_IMDB_DESCRIPTION", False)
     MAX_LIST_ELM = os.environ.get("MAX_LIST_ELM", None)
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
 
