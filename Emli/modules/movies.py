@@ -1,5 +1,5 @@
 import os
-from pyrogram import filters
+from pyrogram import filters,Client
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Emli import IMDB_TEMPLATE
 from Emli.utils.utilsx import extract_user, get_file_id, get_poster, last_online
