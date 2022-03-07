@@ -89,3 +89,4 @@ python-rapidjson
 covid
 imdbpy
 pytesseract~=0.3.8
+pygments
