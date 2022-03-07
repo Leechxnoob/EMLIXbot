@@ -18,6 +18,8 @@ from pyrogram.types import Chat, User
 
 
 StartTime = time.time()
+CMD_HELP = {}
+
 
 # enable logging
 logging.basicConfig(
