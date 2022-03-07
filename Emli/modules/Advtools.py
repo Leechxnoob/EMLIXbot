@@ -1,5 +1,4 @@
 __help__ = """
-
 ★ **Member Sticker**
 
 Automatically Thank Members of a Group With sticker 
