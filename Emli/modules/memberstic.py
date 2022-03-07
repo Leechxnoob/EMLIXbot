@@ -385,12 +385,3 @@ async def sticker_group(bot, message):
 
 
 __mod_name__ = "Member Sticker"
-__help__ = """
-Automatically Thank Members of a Group With sticker 
-
-**Admin Commands:**
- × /memberstic `[on|off]`
- 
-Note : Member count 3,5,7 etc...
- """
-
