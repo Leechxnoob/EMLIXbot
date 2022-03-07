@@ -65,18 +65,5 @@ async def anitchnl(_, message):
 
 
 __mod_name__ = "Antichannel"
-__help__ = """
-your groups to stop anonymous channels sending messages into your chats.
-**Type of messages**
-        - document
-        - photo
-        - sticker
-        - animation
-        - video
-        - text
-        
-**Admin Commands:**
- × /antichannel [on / off] - Anti- channel  function 
-**Note** : If linked_channel  send any containing characters in this type when on  function no del    
- """
+
 
