@@ -10,3 +10,6 @@ blacklist_filters_group = 9
 pipes_group = 10
 taglog_group = 11
 chat_watcher_group = 12
+antispam_group = 13
+antifunc_group = 14
+urllock_group = 15
