@@ -378,7 +378,11 @@ __help__ = """
 *ID:*
 ❂ /id*:* get the current group id. If used by replying to a message, gets that user's id.
 ❂ /gifid*:* reply to a gif to me to tell you its file ID.
- 
+
+❂ /ginfo *:* get's group info for public
+❂ /cinfo *:* get's channel info  for public
+❂ /uinfo *:* get's users info
+
 *Self addded information:* 
 ❂ /setme <text>*:* will set your info
 ❂ /me*:* will get your or another user's info.
