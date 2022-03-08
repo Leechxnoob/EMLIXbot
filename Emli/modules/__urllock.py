@@ -8,7 +8,7 @@ from pyrogram import filters
 from pyrogram.errors import RPCError
 from typing import Union
 from rose import BOT_ID , pbot
-from rose.modules.admin import adminsOnly 
+from Emli.utils.permissions import adminsOnly 
 from pyrogram.types import  Message
 
 
