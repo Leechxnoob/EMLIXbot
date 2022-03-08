@@ -607,7 +607,9 @@ Get the latest Magsik releases or TWRP for your device!
 × /twrp `<codename>`:  Gets latest twrp for the android device using the codename.
 × /orangefox `<codename>`:  Gets latest orangefox recovery for the android device using the codename.
 × /los `<codename>`: Gets Latest lineage os build.
-"""
+× /realme `<codename>`:  Getting realme ui update information
+× /samspec `<codename>`: Getting samsung space
+""" 
 
 __mod_name__ = "Android"
 
