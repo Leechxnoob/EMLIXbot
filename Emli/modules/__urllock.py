@@ -161,5 +161,5 @@ async def edit_or_reply(message, text, parse_mode="md"):
 
 
 
- × /urllock `[on | off ]`: URL Lock     
+
 
