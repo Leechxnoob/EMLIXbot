@@ -79,5 +79,10 @@ file_helpo = file_help.replace("_", " ")
 __help__ = """
  ❍ /nlogo text :  Create your normal logo with your name
  ★ /logos text : create your own logo
+ ×  /logo [TEXT]: Create a logo 
+ ×  /logohq [TEXT]: Create a HQ logo 
+ ×  /write [TEXT] : hand writer
+ ×  /wall [TEXT] : search wallpapers
+ ×  /rlogo [TEXT] : create random logo
  """
 __mod_name__ = "Logo"
