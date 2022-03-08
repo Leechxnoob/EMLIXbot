@@ -384,4 +384,4 @@ async def sticker_group(bot, message):
         await message.reply("@admins , \nAs per Your Group Permission Members of This Group Can't send Stickers to this Chat (`I'm a Member, Not an Admin`) .\n**To Solve this Issue add me as Admin Or Give permission to send stickers in the Chat**")
 
 
-__mod_name__ = "Member Sticker"
+
