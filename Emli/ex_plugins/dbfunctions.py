@@ -32,7 +32,8 @@ blacklist_chatdb = db.blacklistChat
 restart_stagedb = db.restart_stage
 flood_toggle_db = db.flood_toggle
 rssdb = db.rss
-
+nexaub_antif = db.nexa_mongodb
+anitcdb = db.antichannel
 
 def obj_to_str(obj):
     if not obj:
@@ -775,3 +776,74 @@ async def get_rss_feeds_count() -> int:
     feeds = rssdb.find({"chat_id": {"$exists": 1}})
     feeds = await feeds.to_list(length=10000000)
     return len(feeds)
+
+
+async def is_antichnl(group_id):
+    data = anitcdb.find_one({"group_id": group_id})
+    if not data:
+        return False, None
+    else: 
+        return True, data["mode"]
+
+async def antichnl_on(group_id, mode):
+    data = {
+        "group_id":group_id,
+        "mode":(mode)}
+    try:
+        anitcdb.update_one({"group_id": group_id},  {"$set": data}, upsert=True)
+    except:
+        return
+
+
+def antichnl_off(group_id):
+    stark = anitcdb.find_one({"group_id": group_id})
+    if not stark:
+        return False
+    else:
+        anitcdb.delete_one({"group_id": group_id})
+        return True
+
+
+# To on / off / get anti functions
+async def set_anti_func(chat_id, status, mode):
+    anti_f = await nexaub_antif.find_one({"_id": chat_id})
+    if anti_f:
+        await nexaub_antif.update_one({"_id": chat_id}, {"$set": {"status": status, "mode": mode}})
+    else:
+        await nexaub_antif.insert_one({"_id": chat_id, "status": status, "mode": mode})
+
+async def get_anti_func(chat_id):
+    anti_f = await nexaub_antif.find_one({"_id": chat_id})
+    if not anti_f:
+        return None
+    else:
+        snm = [anti_f["status"], anti_f["mode"]]
+        return snm
+
+async def del_anti_func(chat_id):
+    anti_f = await nexaub_antif.find_one({"_id": chat_id})
+    if anti_f:
+        await nexaub_antif.delete_one({"_id": chat_id})
+        return True
+    else:
+        return False
+
+async def url_on(chat_id,status):
+    anti_f = await lockurl.find_one({"_id": chat_id},{"$set": {"status": status}})
+    if anti_f:
+        await lockurl.update_one({"_id": chat_id})
+    else:
+        await lockurl.insert_one({"_id": chat_id, "status": status})
+
+async def is_urlon(chat_id):
+    anti_f = await lockurl.find_one({"_id": chat_id})
+    if not anti_f:
+        return None
+
+async def url_off(chat_id):
+    anti_f = await lockurl.find_one({"_id": chat_id})
+    if anti_f:
+        await lockurl.delete_one({"_id": chat_id})
+        return True
+    else:
+        return False    
