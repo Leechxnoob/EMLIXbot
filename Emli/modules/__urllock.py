@@ -15,7 +15,7 @@ from pyrogram.types import  Message
 from pyrogram import filters
 from pyrogram.types import Message
 from Emli import eor, app
-from Emli.core.decorators.errors import capture_err
+from Emli.utils.errors import capture_err
 
 
 
