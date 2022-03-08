@@ -17,16 +17,7 @@ Note : Member count 3,5,7 etc...
 
  **Admin Commands:**
  × /antichannel [on / off] - Anti- channel  function 
-**Note** : If linked_channel  send any containing characters in this type when on  function no del  
-  
-★ **Logo**
-
-×  /logo [TEXT]: Create a logo 
-×  /logohq [TEXT]: Create a HQ logo 
-×  /write [TEXT] : hand writer
-×  /wall [TEXT] : search wallpapers
-×  /rlogo [TEXT] : create random logo
-    
+**Note** : If linked_channel  send any containing characters in this type when on  function no del     
 """
 
 
