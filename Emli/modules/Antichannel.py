@@ -64,6 +64,6 @@ async def anitchnl(_, message):
 
 
 
-__mod_name__ = "Antichannel"
+
 
 
