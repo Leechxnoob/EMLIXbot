@@ -26,7 +26,7 @@ from telethon.tl.types import DocumentAttributeFilename, MessageMediaDocument
 from Emli.confing import get_str_key
 from Emli.events import register
 from Emli.services.telethon import tbot
-
+from Emli import VIRUS_API_KEY
 
 async def is_register_admin(chat, user):
     if isinstance(chat, (types.InputPeerChannel, types.InputChannel)):
