@@ -19,7 +19,7 @@
 from pyrogram import filters
 from pyrogram.errors import RPCError
 
-from Emli.utils .pluginhelpers import admins_only, get_text
+from Emli.utils.pluginhelper import admins_only, get_text
 from Emli import pbot
 
 
