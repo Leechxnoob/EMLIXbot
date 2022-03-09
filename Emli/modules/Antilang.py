@@ -8,7 +8,7 @@ from pyrogram.types import Message
 from re import search
 from Emli import pbot as NEXAUB
 from Emli.utils.permissions import adminsOnly 
-from Emli import pbot
+from Emli import pbot as app
 from Emli.modules.__urllock import edit_or_reply
 from  Emli.ex_plugins.dbfunctions import set_anti_func , get_anti_func, del_anti_func
 from re import compile
