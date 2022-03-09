@@ -823,10 +823,10 @@ async def get_anti_func(chat_id):
 async def del_anti_func(chat_id):
     anti_f = await nexaub_antif.find_one({"_id": chat_id})
     if anti_f:
-         await nexaub_antif.delete_one({"_id": chat_id})
-           return True
+        await nexaub_antif.delete_one({"_id": chat_id})
+        return True
     else:
-          return False
+        return False
 
 async def url_on(chat_id,status):
     anti_f = await lockurl.find_one({"_id": chat_id},{"$set": {"status": status}})
