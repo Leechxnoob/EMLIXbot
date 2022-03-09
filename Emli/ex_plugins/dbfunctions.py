@@ -823,7 +823,7 @@ async def get_anti_func(chat_id):
 async def del_anti_func(chat_id):
     anti_f = await nexaub_antif.find_one({"_id": chat_id})
     if anti_f:
-      anti_f =   await nexaub_antif.delete_one({"_id": chat_id})
+         await nexaub_antif.delete_one({"_id": chat_id})
         return True
     else:
         return False
