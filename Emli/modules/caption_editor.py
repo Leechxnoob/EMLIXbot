@@ -19,8 +19,8 @@
 from pyrogram import filters
 from pyrogram.errors import RPCError
 
-from Emli.function.pluginhelpers import admins_only, get_text
-from Emli.services.pyrogram import pbot
+from Emli.utils .pluginhelpers import admins_only, get_text
+from Emli import pbot
 
 
 @pbot.on_message(
