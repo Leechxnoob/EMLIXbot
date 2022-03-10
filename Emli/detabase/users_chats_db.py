@@ -110,4 +110,4 @@ class Database:
         return (await self.db.command("dbstats"))['dataSize']
 
 
-db = Database(DATABASE_URI, DATABASE_NAME)
+db = Database(MONGO_DB_URI, MONGO_DB)
