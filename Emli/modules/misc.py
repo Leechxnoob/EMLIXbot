@@ -38,11 +38,12 @@ saved messages are correctly parsed, and to allow you to create buttons.
 ❂ <code>_italic_</code>: wrapping text with '_' will produce italic text
 ❂ <code>*bold*</code>: wrapping text with '*' will produce bold text
 ❂ <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
-❂ <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
+❂ <code>||spoiler||<code> : wrapping text with '||' will produce spoiler text
+❂ <code>[google](www.google.com)</code>: this will create a link - the message will just show <code>google</code>, \
 and tapping on it will open the page at <code>someURL</code>.
-<b>Example:</b><code>[test](example.com)</code>
+<b>Example:</b><code>[test](google.com)</code>
 
-❂ <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
+❂ <code>[buttontext](buttonurl: google.com)</code>: this is a special enhancement to allow users to have telegram \
 buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
 will be the url which is opened.
 <b>Example:</b> <code>[This is a button](buttonurl:example.com)</code>
