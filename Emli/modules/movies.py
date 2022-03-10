@@ -102,7 +102,7 @@ async def who_is(client, message):
             message=chat_photo.big_file_id
         )
         buttons = [[
-            InlineKeyboardButton(🌐"support!​​", url="t.me/OMG_info")
+            InlineKeyboardButton("support!​​👩‍💻", url="t.me/OMG_info")
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -116,7 +116,7 @@ async def who_is(client, message):
         os.remove(local_user_photo)
     else:
         buttons = [[
-            InlineKeyboardButton(🌐"Support", url="https://t.me/OMG_info")
+            InlineKeyboardButton("Support👨‍💻", url="https://t.me/OMG_info")
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_text(
