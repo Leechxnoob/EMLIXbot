@@ -5,7 +5,7 @@ import time
 from Emli import pbot
 from Emli.database.users_chats_db import db
 from Emli import OWNER_ID
-from Emli.utils import broadcast_messages
+from Emli.utils.utilsx import broadcast_messages
 import asyncio
         
 @pbot.on_message(filters.command("broadcast") & filters.user(ADMINS) & filters.reply)
