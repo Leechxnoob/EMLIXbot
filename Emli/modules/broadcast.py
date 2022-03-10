@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 import datetime
 import time
 from Emli import pbot
-from Emli.mongo import db
+from Emli.detabase.users_chats_db import db
 from Emli import OWNER_ID
 from Emli.utils.utilsx import broadcast_messages
 import asyncio
