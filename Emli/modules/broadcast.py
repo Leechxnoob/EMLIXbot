@@ -8,7 +8,7 @@ from Emli import OWNER_ID
 from Emli.utils.utilsx import broadcast_messages
 import asyncio
         
-@pbot.on_message(filters.command("broadcast") & filters.user(ADMINS) & filters.reply)
+@pbot.on_message(filters.command("broadcast") & filters.user(OWNER_ID) & filters.reply)
 # https://t.me/GetTGLink/4178
 async def verupikkals(bot, message):
     users = await db.get_all_users()
