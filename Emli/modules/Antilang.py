@@ -16,8 +16,10 @@ from tokenize import group
 from Emli.utils.filter_groups import antifunc_group
 from Emli.services.keyboard import ikb
 
-__MODULE__ = "Anti-lang"
-__HELP__ = """
+__mod_name__ = "anti-lang"
+
+
+__help__ = """
 Delete messages containing characters from one of the following automatically
 
 - Arabic Language
@@ -41,7 +43,6 @@ Delete messages containing characters from one of the following automatically
 **Note** : If admin send any containing characters in this lang when on  any function
            it will delete and user send 3 warn and after ban him       
  """
-__basic_cmds__ = __HELP__
 
 #lag tool
 class REGEXES:
