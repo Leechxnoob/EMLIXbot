@@ -31,7 +31,7 @@ from Emli import StartTime
 from Emli.modules.helper_funcs.chat_status import sudo_plus
 from Emli.modules.helper_funcs.alternate import send_action, typing_action
 
-MARKDOWN_HELP = f"""
+MARKDOWN_HELP = """
   Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that saved messages are correctly parsed, and to allow you to create buttons.\n
   <b>Supported Markdown:</b>
 ★  - <code>__italic__</code>: Double underscores will produce <i>italic</i> text.
