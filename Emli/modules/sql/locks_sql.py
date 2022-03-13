@@ -27,7 +27,7 @@ class Permissions(BASE):
     button = Column(Boolean, default=False)
     egame = Column(Boolean, default=False)
     inline = Column(Boolean, default=False)
-
+    anonchannel = Column(Boolean, default=False)
     def __init__(self, chat_id):
         self.chat_id = str(chat_id)  # ensure string
         self.audio = False
@@ -47,7 +47,7 @@ class Permissions(BASE):
         self.button = False
         self.egame = False
         self.inline = False
-
+        self.anonchannel = False
     def __repr__(self):
         return "<Permissions for %s>" % self.chat_id
 
@@ -145,6 +145,8 @@ def update_lock(chat_id, lock_type, locked):
             curr_perm.egame = locked
         elif lock_type == "inline":
             curr_perm.inline = locked
+        elif lock_type == 'anonchannel':
+            curr_perm.anonchannel = locked
 
         SESSION.add(curr_perm)
         SESSION.commit()
@@ -214,6 +216,8 @@ def is_locked(chat_id, lock_type):
         return curr_perm.egame
     if lock_type == "inline":
         return curr_perm.inline
+    if lock_type == 'anonchannel':
+        return curr_perm.anonchannel = locked
 
 
 def is_restr_locked(chat_id, lock_type):
