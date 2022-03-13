@@ -7,7 +7,7 @@ import random
 import asyncio
 from Emli mongo import db
 from pyrogram.errors import UserNotParticipant
-from Emli.utils import MakeCaptchaMarkup
+from Emli.utils.markup import MakeCaptchaMarkup
 from Emli.ex_plugins.captcha_maker import number_, emoji_
 from Emli import pbot as app
 
