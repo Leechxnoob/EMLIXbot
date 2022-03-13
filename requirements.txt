@@ -91,3 +91,4 @@ covid
 imdbpy
 pytesseract~=0.3.8
 pygments
+multicolorcaptcha
