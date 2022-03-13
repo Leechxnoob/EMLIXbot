@@ -420,7 +420,7 @@ generated_captcha = captcha.generate()
 
 #Print the output
 print(generated_captcha)
-                welcome_bool = False
+                
                 if not media_wel:
                     VERIFIED_USER_WAITLIST.update(
                         {
