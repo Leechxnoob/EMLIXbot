@@ -70,7 +70,7 @@ ENUM_FUNC_MAP = {
 VERIFIED_USER_WAITLIST = {}
 CAPTCHA_ANS_DICT = {}
 
-from multicolorcaptcha import CaptchaGenerator
+from EmojiCaptcha import Captcha
 
 # do not async
 def send(update, message, keyboard, backup_message):
