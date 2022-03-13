@@ -22,6 +22,7 @@ from Emli.modules.log_channel import loggable
 from Emli.modules.connection import connected
 from Emli.modules.sql.approve_sql import is_approved
 from Emli.modules.helper_funcs.alternate import send_message, typing_action
+from Emli.modules.helper_funcs.filters import CustomFilters
 
 ad = AlphabetDetector()
 
@@ -40,6 +41,7 @@ LOCK_TYPES = {
     "location": Filters.location,
     "egame": Filters.dice,
     "rtl": "rtl",
+     "anonchannel": CustomFilters.is_anon_channel,
     "button": "button",
     "inline": "inline",
 }
@@ -477,6 +479,7 @@ def build_lock_message(chat_id):
             locklist.append("rtl = `{}`".format(locks.rtl))
             locklist.append("button = `{}`".format(locks.button))
             locklist.append("egame = `{}`".format(locks.egame))
+            locklist.append("anonchannel = `{}`".format(locks.anonchannel))
             locklist.append("inline = `{}`".format(locks.inline))
     permissions = dispatcher.bot.get_chat(chat_id).permissions
     permslist.append("messages = `{}`".format(permissions.can_send_messages))
