@@ -403,22 +403,23 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                 )
             if welc_mutes == "captcha":
                 btn = []
-                # Captcha image size number (2 -> 640x360)
-                CAPCTHA_SIZE_NUM = 2
-                # Create Captcha Generator object of specified size
-                generator = CaptchaGenerator(CAPCTHA_SIZE_NUM)
+                captcha = Captcha()
+"""
+    Optional **args
 
-                # Generate a captcha image
-                captcha = generator.gen_captcha_image(difficult_level=3)
-                # Get information
-                image = captcha["image"]
-                characters = captcha["characters"]
-                # print(characters)
-                fileobj = BytesIO()
-                fileobj.name = f"captcha_{new_mem.id}.png"
-                image.save(fp=fileobj)
-                fileobj.seek(0)
-                CAPTCHA_ANS_DICT[(chat.id, new_mem.id)] = int(characters)
+    file_name[str]: custom file name for generating.
+
+    background[str]: background image file path for captcha.
+
+    ---------------------------------------------------------
+
+    Return type -----> dict
+    """
+#Generate captcha
+generated_captcha = captcha.generate()
+
+#Print the output
+print(generated_captcha)
                 welcome_bool = False
                 if not media_wel:
                     VERIFIED_USER_WAITLIST.update(
