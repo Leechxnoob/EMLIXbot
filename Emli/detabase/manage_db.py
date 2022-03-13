@@ -4,7 +4,7 @@ from Emli import confing
 
 class manage_db():
     def __init__(self):
-        self.db = MongoClient(Config.MONGODB_URI)["captcha"]
+        self.db = MongoClient(confing.MONGO_DB_URI)["captcha"]
         self.chats = self.db["Chats"]
         
     def chat_in_db(self, chat_id):
