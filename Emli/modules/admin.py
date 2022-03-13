@@ -559,65 +559,51 @@ def set_title(update: Update, context: CallbackContext):
 @user_admin
 @loggable
 def pin(update: Update, context: CallbackContext) -> str:
-    bot, args = context.bot, context.args
+    bot = context.bot
+    args = context.args
+
     user = update.effective_user
     chat = update.effective_chat
-    msg = update.effective_message
-    msg_id = msg.reply_to_message.message_id if msg.reply_to_message else msg.message_id
 
-    if msg.chat.username:
-        # If chat has a username, use this format
-        link_chat_id = msg.chat.username
-        message_link = f"https://t.me/{link_chat_id}/{msg_id}"
-    elif (str(msg.chat.id)).startswith("-100"):
-        # If chat does not have a username, use this
-        link_chat_id = (str(msg.chat.id)).replace("-100", "")
-        message_link = f"https://t.me/c/{link_chat_id}/{msg_id}"
-
-    is_group = chat.type not in ("private", "channel")
+    is_group = chat.type != "private" and chat.type != "channel"
     prev_message = update.effective_message.reply_to_message
-
-    if prev_message is None:
-        msg.reply_text("Reply a message to pin it!")
-        return
 
     is_silent = True
     if len(args) >= 1:
-        is_silent = (
-            args[0].lower() != "notify"
+        is_silent = not (
+            args[0].lower() == "notify"
             or args[0].lower() == "loud"
             or args[0].lower() == "violent"
         )
+
+    message = update.effective_message
+    pinner = chat.get_member(user.id)
+
+    if (
+        not (pinner.can_pin_messages or pinner.status == "creator")
+        and user.id not in SUDO_USERS
+    ):
+        message.reply_text("You don't have the necessary rights to do that!")
+        return
 
     if prev_message and is_group:
         try:
             bot.pinChatMessage(
                 chat.id, prev_message.message_id, disable_notification=is_silent
             )
-            msg.reply_text(
-                f"I have pinned a message.",
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "👉 Go to message", url=f"{message_link}")
-                        ]
-                    ]
-                ), 
-                parse_mode=ParseMode.HTML,
-                disable_web_page_preview=True,
-            )
         except BadRequest as excp:
-            if excp.message != "Chat_not_modified":
+            if excp.message == "Chat_not_modified":
+                pass
+            else:
                 raise
-
         log_message = (
             f"<b>{html.escape(chat.title)}:</b>\n"
-            f"MESSAGE-PINNED-SUCCESSFULLY\n"
+            f"#PINNED\n"
             f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}"
         )
 
         return log_message
+
 
 
 @bot_admin
