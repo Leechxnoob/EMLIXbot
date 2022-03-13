@@ -5,7 +5,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
 import random
 import asyncio
-from Emli mongo import db
+
 from Emli.detabase.manage_db import manage_db
 from pyrogram.errors import UserNotParticipant
 from Emli.utils.markup import MakeCaptchaMarkup
