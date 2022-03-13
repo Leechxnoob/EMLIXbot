@@ -2,7 +2,7 @@
 from pymongo import MongoClient
 import asyncio
 import sys
-from Emli mongo import MONGO_DB_URI
+from Emli import MONGO_DB_URI
 from confing import get_int_key, get_str_key
 
 class manage_db():
