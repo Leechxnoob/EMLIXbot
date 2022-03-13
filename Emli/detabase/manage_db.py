@@ -1,6 +1,6 @@
 # (c) @JigarVarma2005
 from pymongo import MongoClient
-from config import Config
+from Emli import confing
 
 class manage_db():
     def __init__(self):
