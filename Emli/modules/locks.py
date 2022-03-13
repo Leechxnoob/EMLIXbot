@@ -22,6 +22,7 @@ from Emli.modules.log_channel import loggable
 from Emli.modules.connection import connected
 from Emli.modules.sql.approve_sql import is_approved
 from Emli.modules.helper_funcs.alternate import send_message, typing_action
+from Emli.modules.helper_funcs.filters import CustomFilters
 
 ad = AlphabetDetector()
 
