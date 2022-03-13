@@ -1,11 +1,9 @@
 import html
 
-import telegram.ext as tg
-from telegram import Message, Chat, ParseMode, MessageEntity, Update
+from telegram import Message, Chat, ParseMode, MessageEntity
 from telegram import TelegramError, ChatPermissions
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, CallbackContext, Filters
-from telegram.ext.dispatcher import run_async
+from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
 from alphabet_detector import AlphabetDetector
@@ -24,7 +22,6 @@ from Emli.modules.log_channel import loggable
 from Emli.modules.connection import connected
 from Emli.modules.sql.approve_sql import is_approved
 from Emli.modules.helper_funcs.alternate import send_message, typing_action
-from Emli.modules.helper_funcs.filters import CustomFilters
 
 ad = AlphabetDetector()
 
@@ -92,55 +89,45 @@ UNLOCK_CHAT_RESTRICTION = {
     "pin": {"can_pin_messages": True},
 }
 
-PERM_GROUP = 1
-REST_GROUP = 2
-
-
-class CustomCommandHandler(tg.CommandHandler):
-    def __init__(self, command, callback, **kwargs):
-        super().__init__(command, callback, **kwargs)
-
-    def check_update(self, update):
-        if super().check_update(update) and not (
-                sql.is_restr_locked(update.effective_chat.id, 'messages') and not is_user_admin(update.effective_chat,
-                                                                                                update.effective_user.id)):
-            args = update.effective_message.text.split()[1:]
-            filter_result = self.filters(update)
-            if filter_result:
-                return args, filter_result
-            else:
-                return False
-
-
-CommandHandler = CustomCommandHandler
+PERM_GROUP = -8
+REST_GROUP = -12
 
 
 # NOT ASYNC
 def restr_members(
-    bot, chat_id, members, messages=False, media=False, other=False, previews=False
+    bot,
+    chat_id,
+    members,
+    messages=False,
+    media=False,
+    other=False,
+    previews=False,
 ):
     for mem in members:
         if mem.user in DRAGONS:
             pass
-        elif mem.user == 777000 or mem.user == 1087968824:
-             pass
         try:
             bot.restrict_chat_member(
                 chat_id,
                 mem.user,
-                permissions=ChatPermissions(
                 can_send_messages=messages,
                 can_send_media_messages=media,
                 can_send_other_messages=other,
                 can_add_web_page_previews=previews,
-            ))
+            )
         except TelegramError:
             pass
 
 
 # NOT ASYNC
 def unrestr_members(
-    bot, chat_id, members, messages=True, media=True, other=True, previews=True
+    bot,
+    chat_id,
+    members,
+    messages=True,
+    media=True,
+    other=True,
+    previews=True,
 ):
     for mem in members:
         try:
@@ -156,19 +143,19 @@ def unrestr_members(
             pass
 
 
-def locktypes(update: Update, context: CallbackContext):
+def locktypes(update, context):
     update.effective_message.reply_text(
         "\n • ".join(
             ["Locks available: "]
-            + sorted(list(LOCK_TYPES) + list(LOCK_CHAT_RESTRICTION))
-        )
+            + sorted(list(LOCK_TYPES) + list(LOCK_CHAT_RESTRICTION)),
+        ),
     )
 
 
 @user_admin
 @loggable
 @typing_action
-def lock(update: Update, context: CallbackContext) -> str:
+def lock(update, context) -> str:
     args = context.args
     chat = update.effective_chat
     user = update.effective_user
@@ -212,7 +199,7 @@ def lock(update: Update, context: CallbackContext) -> str:
                     )
                 )
 
-            elif ltype in LOCK_CHAT_RESTRICTION:
+            if ltype in LOCK_CHAT_RESTRICTION:
                 # Connection check
                 conn = connected(context.bot, update, chat, user.id, need_admin=True)
                 if conn:
@@ -220,7 +207,8 @@ def lock(update: Update, context: CallbackContext) -> str:
                     chat_id = conn
                     chat_name = chat.title
                     text = "Locked {} for all non-admins in {}!".format(
-                        ltype, chat_name
+                        ltype,
+                        chat_name,
                     )
                 else:
                     if update.effective_message.chat.type == "private":
@@ -243,18 +231,6 @@ def lock(update: Update, context: CallbackContext) -> str:
                     ),
                 )
 
-                context.bot.restrict_chat_member(chat.id, int(777000), permissions=ChatPermissions(
-                    can_send_messages=True,
-                    can_send_media_messages=True,
-                    can_send_other_messages=True,
-                    can_add_web_page_previews=True))
-
-                context.bot.restrict_chat_member(chat.id, int(1087968824), permissions=ChatPermissions(
-                    can_send_messages=True,
-                    can_send_media_messages=True,
-                    can_send_other_messages=True,
-                    can_add_web_page_previews=True))
-
                 send_message(update.effective_message, text, parse_mode="markdown")
                 return (
                     "<b>{}:</b>"
@@ -266,12 +242,10 @@ def lock(update: Update, context: CallbackContext) -> str:
                         ltype,
                     )
                 )
-
-            else:
-                send_message(
-                    update.effective_message,
-                    "What are you trying to lock...? Try /locktypes for the list of lockables",
-                )
+            send_message(
+                update.effective_message,
+                "What are you trying to lock...? Try /locktypes for the list of lockables",
+            )
         else:
             send_message(update.effective_message, "What are you trying to lock...?")
 
@@ -287,7 +261,7 @@ def lock(update: Update, context: CallbackContext) -> str:
 @user_admin
 @loggable
 @typing_action
-def unlock(update: Update, context: CallbackContext) -> str:
+def unlock(update, context) -> str:
     args = context.args
     chat = update.effective_chat
     user = update.effective_user
@@ -327,7 +301,7 @@ def unlock(update: Update, context: CallbackContext) -> str:
                     )
                 )
 
-            elif ltype in UNLOCK_CHAT_RESTRICTION:
+            if ltype in UNLOCK_CHAT_RESTRICTION:
                 # Connection check
                 conn = connected(context.bot, update, chat, user.id, need_admin=True)
                 if conn:
@@ -377,11 +351,10 @@ def unlock(update: Update, context: CallbackContext) -> str:
                         ltype,
                     )
                 )
-            else:
-                send_message(
-                    update.effective_message,
-                    "What are you trying to unlock...? Try /locktypes for the list of lockables.",
-                )
+            send_message(
+                update.effective_message,
+                "What are you trying to unlock...? Try /locktypes for the list of lockables.",
+            )
 
         else:
             send_message(update.effective_message, "What are you trying to unlock...?")
@@ -390,7 +363,7 @@ def unlock(update: Update, context: CallbackContext) -> str:
 
 
 @user_not_admin
-def del_lockables(update: Update, context: CallbackContext):
+def del_lockables(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user
@@ -508,6 +481,7 @@ def build_lock_message(chat_id):
             locklist.append("inline = `{}`".format(locks.inline))
             locklist.append("anonchannel = `{}`".format(locks.anonchannel))
     permissions = dispatcher.bot.get_chat(chat_id).permissions
+
     permslist.append("messages = `{}`".format(permissions.can_send_messages))
     permslist.append("media = `{}`".format(permissions.can_send_media_messages))
     permslist.append("poll = `{}`".format(permissions.can_send_polls))
@@ -531,7 +505,7 @@ def build_lock_message(chat_id):
 
 @user_admin
 @typing_action
-def list_locks(update: Update, context: CallbackContext):
+def list_locks(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user
 
@@ -600,13 +574,14 @@ You're in the right place!
 The locks module allows you to lock away some common items in the \
 telegram world; the bot will automatically delete them!
 
- • `/locktypes`*:* Lists all possible locktypes
- 
+❂ /locktypes*:* Lists all possible locktypes
+
 *Admins only:*
- • `/lock <type>`*:* Lock items of a certain type (not available in private)
- • `/unlock <type>`*:* Unlock items of a certain type (not available in private)
- • `/locks`*:* The current list of locks in this chat.
- 
+
+❂ /lock <type>*:* Lock items of a certain type (not available in private)
+❂ /unlock <type>*:* Unlock items of a certain type (not available in private)
+❂ /locks*:* The current list of locks in this chat.
+
 Locks can be used to restrict a group's users.
 eg:
 Locking urls will auto-delete all messages with urls, locking stickers will restrict all \
@@ -614,18 +589,28 @@ non-admin users from sending stickers, etc.
 Locking bots will stop non-admins from adding bots to the chat.
 
 *Note:*
- • Unlocking permission *info* will allow members (non-admins) to change the group information, such as the description or the group name
- • Unlocking permission *pin* will allow members (non-admins) to pinned a message in a group
+❂ Unlocking permission *info* will allow members (non-admins) to change the group information, such as the description or the group name
+❂ Unlocking permission *pin* will allow members (non-admins) to pinned a message in a group
 """
 
 __mod_name__ = "Locks"
 
 LOCKTYPES_HANDLER = DisableAbleCommandHandler("locktypes", locktypes, run_async=True)
-LOCK_HANDLER = CommandHandler("lock", lock)  # , filters=Filters.chat_type.groups, run_async=True)
+LOCK_HANDLER = CommandHandler(
+    "lock",
+    lock,
+    pass_args=True,
+    run_async=True,
+)  # , filters=Filters.chat_type.group)
 UNLOCK_HANDLER = CommandHandler(
-    "unlock", unlock, run_async=True
-)  # , filters=Filters.chat_type.groups)
-LOCKED_HANDLER = CommandHandler("locks", list_locks)  # , filters=Filters.chat_type.groups, run_async=True)
+    "unlock",
+    unlock,
+    pass_args=True,
+    run_async=True,
+)  # , filters=Filters.chat_type.group)
+LOCKED_HANDLER = CommandHandler(
+    "locks", list_locks, run_async=True
+)  # , filters=Filters.chat_type.group)
 
 dispatcher.add_handler(LOCK_HANDLER)
 dispatcher.add_handler(UNLOCK_HANDLER)
@@ -633,5 +618,6 @@ dispatcher.add_handler(LOCKTYPES_HANDLER)
 dispatcher.add_handler(LOCKED_HANDLER)
 
 dispatcher.add_handler(
-    MessageHandler(Filters.all & Filters.chat_type.groups, del_lockables), PERM_GROUP
+    MessageHandler(Filters.all & Filters.chat_type.group, del_lockables),
+    PERM_GROUP,
 )
