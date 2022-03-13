@@ -26,7 +26,7 @@ from random import randint
 from re import findall
 from re import sub as re_sub
 from sys import executable
-from EmojiCaptcha import captcha
+
 import aiofiles
 import speedtest
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
