@@ -78,7 +78,8 @@ tzlocal
 pendulum
 fuzzysearch
 img2pdf
-multicolorcaptcha
+EmojiCaptcha==0.1.2
+captcha
 gitpython
 cloudmersive_virus_api_client
 chromedriver
