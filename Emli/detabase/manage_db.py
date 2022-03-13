@@ -1,11 +1,13 @@
 # (c) @JigarVarma2005
 from pymongo import MongoClient
+import asyncio
+import sys
 from Emli mongo import MONGO_DB_URI
-from confing import get_str_key
+from confing import get_int_key, get_str_key
 
 class manage_db():
     def __init__(self):
-        self.db = MongoClient(mongo.MONGO_DB_URI)["captcha"]
+        self.db = MongoClient(get_str_key("MONGO_DB_URI")["captcha"]
         self.chats = self.db["Chats"]
         
     def chat_in_db(self, chat_id):
