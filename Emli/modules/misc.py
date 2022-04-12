@@ -34,15 +34,23 @@ from Emli.modules.helper_funcs.alternate import send_action, typing_action
 MARKDOWN_HELP = """
   Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that saved messages are correctly parsed, and to allow you to create buttons.\n
   <b>Supported Markdown:</b>
-★  - <code>__italic__</code>: Double underscores will produce <i>italic</i> text.
-★  - <code>**bold**</code>: Double asterisks will produce <b>bold</b> text. ★ - <code>`code`</code>: Backticks will produce <code>monospace</code> text.
-★- <code>~~strike~~</code>: Double tildes will produce <del>strikethrough</del> text.
-★  - <code>--underline--</code> Double Hyphen will produce <u>underline</u> text.
-★ - <code>||spoiler||</code>: Double pipes will produce <spoiler>spoiler</spoiler> text.
-★  - <code>[sometext](someURL)</code>: this will create a link. the message will just show sometext, and tapping on it will open the page at someURL.
-  EG: <code>[test](example.com)</code>
-  - <code>[buttontext](buttonurl:someURL)</code>: This is the formatting to create a telegram button. buttontext will be what is displayed on the button, and someurl will be the url to redirect.
-  EG: <code>[This is a button](buttonurl:google.com)</code>
+<b>Markdown Formatting</b>
+You can format your message using bold, italics, underline,
+and much more.Go ahead and experiment!
+- <code>**Bold**</code> : This will show as <b>bold</b> text.
+- <code>~strike~</code>: This will show as <strike>strike</strike> text.
+- <code>__italic__</code>: This will show as <i>italic</i> text.
+- <code>--underline--</code>: This will show as <u>underline</u> text.
+- <code>`code words`</code>: This will show as <code>code</code> text.
+- <code>||spoiler||</code>: This will show as <spoiler>Spoiler</spoiler> text.
+- <code>[hyperlink](google.com)</code>: This will create a <a href='http://www.google.com/'>hyperlink</a> text.
+If you would like to send buttons on the same row, use the :same formatting. EG:
+
+<code>
+[button 1](buttonurl://example.com)
+[button 2](buttonurl://example.com:same)
+[button 3](buttonurl://example.com)
+</code>
 
 ★  If you want multiple buttons on the same line, use :same, as such:
   <code>[one](buttonurl://example.com)</code>
