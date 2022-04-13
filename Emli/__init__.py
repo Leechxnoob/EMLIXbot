@@ -20,7 +20,7 @@ import pymongo
 StartTime = time.time()
 CMD_HELP = {}
 
-dbn = myclient["supun"]
+
 
 
 # enable logging
