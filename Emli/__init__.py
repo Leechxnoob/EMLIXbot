@@ -20,6 +20,9 @@ from pyrogram.types import Chat, User
 StartTime = time.time()
 CMD_HELP = {}
 
+myclient = pymongo.MongoClient(DB_URI)
+dbn = myclient["supun"]
+
 
 # enable logging
 logging.basicConfig(
