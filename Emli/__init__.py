@@ -20,7 +20,6 @@ import pymongo
 StartTime = time.time()
 CMD_HELP = {}
 
-myclient = pymongo.MongoClient(DB_URI)
 dbn = myclient["supun"]
 
 
