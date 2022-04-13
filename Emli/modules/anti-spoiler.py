@@ -11,7 +11,7 @@ from Emli.utils.filter_groups import *
 import pymongo
 from pyrogram.types import MessageEntity
 from Emli import pbot as app
-
+from Emli import MONGO_DB_URI
 
 
 
