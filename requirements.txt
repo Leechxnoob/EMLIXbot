@@ -78,7 +78,7 @@ tzlocal
 pendulum
 fuzzysearch
 img2pdf
-EmojiCaptcha==0.1.2
+EmojiCaptcha
 captcha
 gitpython
 cloudmersive_virus_api_client
@@ -92,3 +92,4 @@ imdbpy
 pytesseract~=0.3.8
 pygments
 multicolorcaptcha
+gpytranslate==1.4.0
