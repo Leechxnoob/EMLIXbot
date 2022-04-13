@@ -23,7 +23,7 @@ from tokenize import group
 from Emli.utils.filter_groups import antifunc_group
 from Emli.services.keyboard import ikb
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton,  Message
-from Emli import dbn
+
 from gpytranslate import Translator
 import asyncio
 
