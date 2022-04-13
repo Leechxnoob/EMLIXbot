@@ -13,8 +13,8 @@ from pyrogram.types import MessageEntity
 from Emli import pbot as app
 from Emli import MONGO_DB_URI
 
-MongoClient = pymongo.MongoClient(MONGO_DB_URI)
-dbx = MongoClient["supun"]
+myclient = pymongo.MongoClient(MONGO_DB_URI)
+dbx = myclient["supun"]
 anitsdb = dbx['ANTIspoiler']
 
 @app.on_message(filters.command("antispoiler") )
