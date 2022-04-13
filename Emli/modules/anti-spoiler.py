@@ -12,9 +12,7 @@ import pymongo
 from pyrogram.types import MessageEntity
 from Emli import pbot as app
 
-myclient = pymongo.MongoClient(DB_URI)
-dbx = myclient["supun"]
-anitsdb = dbx['ANTIspoiler']
+
 
 
 
