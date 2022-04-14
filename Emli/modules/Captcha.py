@@ -9,7 +9,7 @@ from EmojiCaptcha import Captcha as emoji_captcha
 import random
 from captcha.image import ImageCaptcha
 from . antlangs import *
-from Emli.Inline.query import *
+from Emli.utils.query import *
 
 db = {}
 
@@ -101,7 +101,7 @@ def emoji_() -> dict:
     return maker
 
 def number_() -> dict:
-    filename = ".text/lol.png"
+    filename = ".resources/background.png"
     image = ImageCaptcha(width = 280, height = 140, font_sizes=[80,83])
     final_number = str(random.randint(0000, 9999))
     image.write("   " + final_number, str(filename))
