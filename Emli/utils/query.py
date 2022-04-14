@@ -1,11 +1,11 @@
 
 
-from  Rose import bot as app
-from Rose.mongo.captcha import captchas
+from  Emli import bot as app
+from Emli.mongo.captcha import captchas
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from Rose.plugins.antlangs import *
+from Emli.plugins.antlangs import *
 import random
-from Rose.plugins.captcha import *
+from Emli.plugins.captcha import *
 
 db = {}
 
