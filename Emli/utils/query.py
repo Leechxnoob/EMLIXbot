@@ -1,6 +1,6 @@
 
 
-from  Emli import bot as app
+from  Emli import pbot as app
 from Emli.ex_plugins.captchamake import captchas
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from Emli.modules.antlangs import *
