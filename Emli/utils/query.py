@@ -1,11 +1,11 @@
 
 
 from  Emli import bot as app
-from Emli.mongo.captcha import captchas
+from Emli.ex_plugins.captchamake import captchas
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from Emli.plugins.antlangs import *
+from Emli.modules.antlangs import *
 import random
-from Emli.plugins.captcha import *
+from Emli.modules.Captcha import *
 
 db = {}
 
