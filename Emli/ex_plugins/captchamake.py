@@ -1,6 +1,6 @@
 
 from pymongo import MongoClient
-from Rose import MONGO_URL
+from Emli import MONGO_DB_URI
 
 class captchas():
     def __init__(self):
