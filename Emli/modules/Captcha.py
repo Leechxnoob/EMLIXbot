@@ -1,7 +1,7 @@
 
 import asyncio
 from  Emli import pbot as app 
-from Emli.mongo.captcha import captchas
+from Emli.ex_plugins.captchamake import captchas
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ChatPermissions
 from pyrogram import filters
