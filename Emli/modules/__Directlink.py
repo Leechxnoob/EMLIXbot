@@ -51,6 +51,66 @@ async def direct_link_generator(c: Client, update: Update):
 
     await update.reply_text("\n".join(reply))
 
+def gdrive(url: str) -> str:
+    """ GDrive direct links generator """
+    drive = 'https://drive.google.com'
+    try:
+        link = re.findall(r'\bhttps?://drive\.google\.com\S+', url)[0]
+    except IndexError:
+        reply = "`No Google drive links found`\n"
+        return reply
+    file_id = ''
+    reply = ''
+    if link.find("view") != -1:
+        file_id = link.split('/')[-2]
+    elif link.find("open?id=") != -1:
+        file_id = link.split("open?id=")[1].strip()
+    elif link.find("uc?id=") != -1:
+        file_id = link.split("uc?id=")[1].strip()
+    url = f'{drive}/uc?export=download&id={file_id}'
+    download = requests.get(url, stream=True, allow_redirects=False)
+    cookies = download.cookies
+    try:
+        # In case of small file size, Google downloads directly
+        dl_url = download.headers["location"]
+        if 'accounts.google.com' in dl_url:  # non-public file
+            reply += '`Link is not public!`\n'
+            return reply
+        name = 'Direct Download Link'
+    except KeyError:
+        # In case of download warning page
+        page = BeautifulSoup(download.content, 'lxml')
+        export = drive + page.find('a', {'id': 'uc-download-link'}).get('href')
+        name = page.find('span', {'class': 'uc-name-size'}).text
+        response = requests.get(export,
+                                stream=True,
+                                allow_redirects=False,
+                                cookies=cookies)
+        dl_url = response.headers['location']
+        if 'accounts.google.com' in dl_url:
+            reply += '`Link is not public!`\n'
+            return reply
+    reply += f'[{name}]({dl_url})\n'
+    return reply
+
+
+def mediafire(url: str) -> str:
+    """ MediaFire direct links generator """
+    try:
+        link = re.findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
+    except IndexError:
+        reply = "`No MediaFire links found`\n"
+        return reply
+    reply = ''
+    page = BeautifulSoup(requests.get(link).content, 'lxml')
+    info = page.find('a', {'aria-label': 'Download file'})
+    dl_url = info.get('href')
+    size = re.findall(r'\(.*\)', info.text)[0]
+    name = page.find('div', {'class': 'filename'}).text
+    reply += f'[{name} {size}]({dl_url})\n'
+    return reply
+
+
 
 def sourceforge(url: str) -> str:
     try:
