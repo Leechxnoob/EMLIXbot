@@ -9,4 +9,4 @@ COPY . .
 
 RUN python3 -m pip install -U -r requirements.txt
 
-CMD ["python3", "-m", "Cutiepii_Robot"]
+CMD ["python3", "-m", "Emli"]
