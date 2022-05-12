@@ -134,6 +134,22 @@ def sourceforge(url: str) -> str:
         reply += f'<a href="{dl_url}">{name}</a> '
     return reply
 
+def github(url: str) -> str:
+    """ github direct links generator """
+    try:
+        link = re.findall(r'\bhttps?://.*github\.com\S+', url)[0]
+    except IndexError:
+        reply = "`No github links found`\n"
+        return reply
+    reply = ''
+    page = BeautifulSoup(requests.get(link).content, 'lxml')
+    info = page.find('a', {'aria-label': 'Download file'})
+    dl_url = info.get('href')
+    size = re.findall(r'\(.*\)', info.text)[0]
+    name = page.find('div', {'class': 'filename'}).text
+    reply += f'[{name} {size}]({dl_url})\n'
+    return reply
+
 
 def useragent():
     useragents = BeautifulSoup(
