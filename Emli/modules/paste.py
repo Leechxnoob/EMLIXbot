@@ -6,7 +6,7 @@ import aiofiles
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton
-from Emli.core.keyboard import ikb
+from Emli.services.keyboard import ikb
 from Emli import aiohttpsession as session
 from Emli import pbot as app eor
 from Emli.utils.errors import capture_err
