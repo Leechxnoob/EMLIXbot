@@ -71,7 +71,7 @@ nudepy
 nekos.py
 motor
 gpytranslate
-fontTools
+fonttools==4.33.3
 opencv-python-headless
 odmantic
 tzlocal
