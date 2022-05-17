@@ -41,3 +41,14 @@ async def paste(content):
         None, partial(_netcat, "ezup.dev", 9999, content)
     )
     return link
+
+from Emli.utils.http import post
+
+BASE = "https://batbin.me/"
+
+
+async def bpaste(content: str):
+    resp = await post(f"{BASE}api/v2/paste", data=content)
+    if not resp["success"]:
+        return
+    return BASE + resp["message"]
