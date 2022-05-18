@@ -68,7 +68,7 @@ NOTE: Fillings only works in greetings module.
 <b>example</b> <i>button with markdown</i> <code>formatting</code> ~ [button text, https://google.com]
 """
 
-user_admin
+@user_admin
 def echo(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
     message = update.effective_message
