@@ -67,12 +67,11 @@ NOTE: Fillings only works in greetings module.
 
 <b>example</b> <i>button with markdown</i> <code>formatting</code> ~ [button text, https://google.com]
 """
-
 @user_admin
 def echo(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
     message = update.effective_message
-<u>Supported Fillings:</u>
+
     if message.reply_to_message:
         message.reply_to_message.reply_text(
             args[1], parse_mode="MARKDOWN", disable_web_page_preview=True
@@ -82,6 +81,9 @@ def echo(update: Update, context: CallbackContext):
             args[1], quote=False, parse_mode="MARKDOWN", disable_web_page_preview=True
         )
     message.delete()
+
+
+
 
 @app.on_message(command("markdownhelp") & ~edited)
 async def mkdwnhelp(_, m: Message):
