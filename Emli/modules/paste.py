@@ -8,7 +8,8 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton
 from Emli.services.keyboard import ikb
 from Emli import aiohttpsession as session
-from Emli import pbot as app eor
+from Emli import pbot as app 
+from Emli import eor
 from Emli.utils.errors import capture_err
 from Emli.utils.pastebin import paste
 from Emli.utils.pastebin import bpaste
