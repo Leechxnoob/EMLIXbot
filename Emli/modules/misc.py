@@ -35,38 +35,31 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from Emli import BOT_USERNAME,pbot as app
 
 
-MARKDOWN = """
-Read the below text carefully to find out how formatting works!
+MARKDOWN_HELP = f"""
+Markdown is a very powerful formatting tool supported by telegram. {dispatcher.bot.first_name} has some enhancements, to make sure that \
+saved messages are correctly parsed, and to allow you to create buttons.
 
-<u>Supported Fillings:</u>
+❂ <code>_italic_</code>: wrapping text with '_' will produce italic text
+❂ <code>*bold*</code>: wrapping text with '*' will produce bold text
+❂ <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
+❂ <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
+and tapping on it will open the page at <code>someURL</code>.
+<b>Example:</b><code>[test](example.com)</code>
 
-<code>{name}</code> - This will mention the user with their name.
-<code>{chat}</code> - This will fill with the current chat name.
+❂ <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
+buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
+will be the url which is opened.
+<b>Example:</b> <code>[This is a button](buttonurl:example.com)</code>
 
-NOTE: Fillings only works in greetings module.
+If you want multiple buttons on the same line, use :same, as such:
+<code>[one](buttonurl://example.com)
+[two](buttonurl://google.com:same)</code>
+This will create two buttons on a single line, instead of one button per line.
 
-
-<u>Supported formatting:</u>
-
-<code>**Bold**</code> : This will show as <b>bold</b> text.
-<code>~~strike~~</code>: This will show as <strike>strike</strike> text.
-<code>__italic__</code>: This will show as <i>italic</i> text.
-<code>--underline--</code>: This will show as <u>underline</u> text.
-<code>`code words`</code>: This will show as <code>code</code> text.
-<code>||spoiler||</code>: This will show as <spoiler>Spoiler</spoiler> text.
-<code>[hyperlink](google.com)</code>: This will create a <a href='https://www.google.com'>hyperlink</a> text.
-<b>Note:</b> You can use both markdown & html tags.
-
-
-<u>Button formatting:</u>
-
--> text ~ [button text, button link]
-
-
-<u>Example:</u>
-
-<b>example</b> <i>button with markdown</i> <code>formatting</code> ~ [button text, https://google.com]
+Keep in mind that your message <b>MUST</b> contain some text other than just a button!
 """
+
+
 @user_admin
 def echo(update: Update, context: CallbackContext):
     args = update.effective_message.text.split(None, 1)
@@ -83,30 +76,35 @@ def echo(update: Update, context: CallbackContext):
     message.delete()
 
 
-
-
-@app.on_message(command("markdownhelp") & ~edited)
-async def mkdwnhelp(_, m: Message):
-    keyb = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton(
-                    text="Click Here!",
-                    url=f"http://t.me/{BOT_USERNAME}?start=mkdwn_help",
-                )
-            ]
-        ]
+def markdown_help_sender(update: Update):
+    update.effective_message.reply_text(MARKDOWN_HELP, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_text(
+        "Try forwarding the following message to me, and you'll see, and Use #test!"
     )
-    if m.chat.type != "private":
-        await m.reply(
-            "Click on the below button to get markdown usage syntax in pm!",
-            reply_markup=keyb,
+    update.effective_message.reply_text(
+        "/save test This is a markdown test. _italics_, *bold*, code, "
+        "[URL](example.com) [button](buttonurl:github.com) "
+        "[button2](buttonurl://google.com:same)"
+    )
+
+
+def markdown_help(update: Update, context: CallbackContext):
+    if update.effective_chat.type != "private":
+        update.effective_message.reply_text(
+            "Contact me in pm",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            "Markdown help",
+                            url=f"t.me/{context.bot.username}?start=markdownhelp",
+                        )
+                    ]
+                ]
+            ),
         )
-    else:
-        await m.reply(
-            MARKDOWN, parse_mode="html", disable_web_page_preview=True
-        )
-    return
+        return
+    markdown_help_sender(update)
 
 def wiki(update: Update, context: CallbackContext):
     kueri = re.split(pattern="wiki", string=update.effective_message.text)
