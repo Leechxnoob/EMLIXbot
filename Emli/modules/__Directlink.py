@@ -1,5 +1,5 @@
-#    Hitsuki (A telegram bot project)
 
+#copyright @shado_hackers. In telegram
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -19,6 +19,8 @@ from random import choice
 
 import requests
 from bs4 import BeautifulSoup
+
+import cloudscraper 
 from Emli import pbot
 from pyrogram import Client, filters
 from pyrogram.types import Update
@@ -150,6 +152,105 @@ def github(url: str) -> str:
     reply += f'[{name} {size}]({dl_url})\n'
     return reply
 
+def androidfilehost(url: str) -> str:
+    """AFH direct links generator"""
+    try:
+        link = re.findall(r'\bhttps?://.*androidfilehost.*fid.*\S+', url)[0]
+    except IndexError:
+        reply = "`No AFH links found`\n"
+        return reply
+    fid = re.findall(r'\?fid=(.*)', link)[0]
+    session = requests.Session()
+    user_agent = useragent()
+    headers = {'user-agent': user_agent}
+    res = session.get(link, headers=headers, allow_redirects=True)
+    headers = {
+        'origin': 'https://androidfilehost.com',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-US,en;q=0.9',
+        'user-agent': user_agent,
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'x-mod-sbb-ctype': 'xhr',
+        'accept': '*/*',
+        'referer': f'https://androidfilehost.com/?fid={fid}',
+        'authority': 'androidfilehost.com',
+        'x-requested-with': 'XMLHttpRequest',
+    }
+    data = {
+        'submit': 'submit',
+        'action': 'getdownloadmirrors',
+        'fid': f'{fid}'
+    }
+    mirrors = None
+    reply = ''
+    error = "`Error: Can't find Mirrors for the link`\n"
+    try:
+        req = session.post(
+            'https://androidfilehost.com/libs/otf/mirrors.otf.php',
+            headers=headers,
+            data=data,
+            cookies=res.cookies)
+        mirrors = req.json()['MIRRORS']
+    except (json.decoder.JSONDecodeError, TypeError):
+        reply += error
+    if not mirrors:
+        reply += error
+        return reply
+    for item in mirrors:
+        name = item['name']
+        dl_url = item['url']
+        reply += f'[{name}]({dl_url}) '
+    return reply
+
+def anonfiles(url: str) -> str:
+    reply = ''
+    html_s = requests.get(url).content
+    soup = BeautifulSoup(html_s, "html.parser")
+    _url = soup.find("a", attrs={"class": "btn-primary"})["href"]
+    name = _url.rsplit("/", 1)[1]
+    dl_url = _url.replace(" ", "%20")
+    reply += f'[{name}]({dl_url})\n'
+    return reply
+
+def onedrive(link: str) -> str:
+    link_without_query = urlparse(link)._replace(query=None).geturl()
+    direct_link_encoded = str(standard_b64encode(bytes(link_without_query, "utf-8")), "utf-8")
+    direct_link1 = f"https://api.onedrive.com/v1.0/shares/u!{direct_link_encoded}/root/content"
+    resp = requests.head(direct_link1)
+    if resp.status_code != 302:
+        return "`Error: Unauthorized link, the link may be private`"
+    dl_link = resp.next.url
+    file_name = dl_link.rsplit("/", 1)[1]
+    resp2 = requests.head(dl_link)
+    dl_size = humanbytes(int(resp2.headers["Content-Length"]))
+    return f"[{file_name} ({dl_size})]({dl_link})"
+
+def mdis_k(urlx):
+    scraper = cloudscraper.create_scraper(interpreter="nodejs", allow_brotli=False)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36"
+    }
+    apix = f"http://x.egraph.workers.dev/?param={urlx}"
+    response = scraper.get(apix, headers=headers)
+    query = response.json()
+    return query
+
+def mdisk_ddl(url: str) -> str:
+
+    check = re.findall(r"\bhttps?://.*mdisk\S+", url)
+    if not check:
+        textx = f"Invalid mdisk url"
+        return textx
+    else:
+        try:
+            fxl = url.split("/")
+            urlx = fxl[-1]
+            uhh = mdis_k(urlx)
+            text = f'{uhh["download"]}'
+            return text
+        except ValueError:
+            textx = f"The content is deleted."
+            return textx
 
 def useragent():
     useragents = BeautifulSoup(
