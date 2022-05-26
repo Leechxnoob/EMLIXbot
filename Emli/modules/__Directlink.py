@@ -45,8 +45,18 @@ async def direct_link_generator(c: Client, update: Update):
         await update.reply_text("No links found!")
         return
     for link in links:
-        if 'sourceforge.net' in link:
-            reply.append(sourceforge(link))
+        if 'drive.google.com' in link:
+            reply += gdrive(link)
+        elif 'mediafire.com' in link:
+            reply += mediafire(link)
+        elif 'sourceforge.net' in link
+             reply += sourceforge(link)
+        elif 'github.com' in link:
+             reply += github(link)
+        elif 'anonfiles.com' in link:
+              reply += anonfiles(link)
+        elif 'androidfilehost.com' in link:
+              reply += androidfilehost(link)
         else:
             reply.append(re.findall(
                 r"\bhttps?://(.*?[^/]+)", link)[0] + ' is not supported')
