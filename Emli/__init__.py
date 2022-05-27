@@ -113,6 +113,8 @@ if ENV:
     BOT_ID = int(os.environ.get("BOT_ID", None))
     ARQ_API_URL = "https://arq.hamker.in"
     ARQ_API_KEY = ARQ_API
+    GOOGLE_CHROME_BIN = "/usr/bin/google-chrome"
+    CHROME_DRIVER = "/usr/bin/chromedriver"
     IMDB_TEMPLATE = os.environ.get("IMDB_TEMPLATE", "<b>Query: {query}</b> \n‌IMDb Data:\n\n🏷 Title: <a href={url}>{title}</a>\n🎭 Genres: {genres}\n📆 Year: <a href={url}/releaseinfo>{year}</a>\n🌟 Rating: <a href={url}/ratings>{rating}</a> / 10")
     LONG_IMDB_DESCRIPTION = os.environ.get("LONG_IMDB_DESCRIPTION", False)
     MAX_LIST_ELM = os.environ.get("MAX_LIST_ELM", None)
@@ -192,7 +194,9 @@ else:
     #SESSION_STRING = Config.SESSION_STRING
     INFOPIC = Config.INFOPIC
     BOT_USERNAME = Config.BOT_USERNAME
-    STRING_SESSION = Config.STRING_SESSION
+    GOOGLE_CHROME_BIN = Config.GOOGLE_CHROME_BIN
+    CHROME_DRIVER = Config.CHROME_DRIVER
+    #STRING_SESSION = Config.STRING_SESSION
     LASTFM_API_KEY = Config.LASTFM_API_KEY
     CF_API_KEY = Config.CF_API_KEY
     BOT_USERNAME = Config.BOT_USERNAME
