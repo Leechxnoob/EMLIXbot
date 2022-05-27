@@ -49,7 +49,7 @@ async def direct_link_generator(c: Client, update: Update):
             reply += gdrive(link)
         elif 'mediafire.com' in link:
             reply += mediafire(link)
-        elif 'sourceforge.net' in link
+        elif 'sourceforge.net' in link:
              reply += sourceforge(link)
         elif 'github.com' in link:
              reply += github(link)
@@ -57,6 +57,8 @@ async def direct_link_generator(c: Client, update: Update):
               reply += anonfiles(link)
         elif 'androidfilehost.com' in link:
               reply += androidfilehost(link)
+        elif 'mdisk.me' in link:
+              reply += mdisk(link)
         else:
             reply.append(re.findall(
                 r"\bhttps?://(.*?[^/]+)", link)[0] + ' is not supported')
