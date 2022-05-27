@@ -19,7 +19,7 @@ from zalgo_text import zalgo
 
 from pyrogram import filters
 
-from Emli import telethn, ubot, pgram, TEMP_DOWNLOAD_DIRECTORY, SUPPORT_CHAT, GOOGLE_CHROME_BIN, CHROME_DRIVER
+from Emli import telethn,  TEMP_DOWNLOAD_DIRECTORY, SUPPORT_CHAT, GOOGLE_CHROME_BIN, CHROME_DRIVER
 from Emli import pbot as pgram
 
 
