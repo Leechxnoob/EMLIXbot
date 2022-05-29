@@ -4,6 +4,7 @@ lxml
 wget
 gtts
 beautifulsoup4
+Flask
 requests
 python-telegram-bot==13.11
 SQLAlchemy==1.4.36
