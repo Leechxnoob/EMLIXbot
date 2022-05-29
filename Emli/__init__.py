@@ -204,6 +204,10 @@ else:
     LASTFM_API_KEY = Config.LASTFM_API_KEY
     CF_API_KEY = Config.CF_API_KEY
     BOT_USERNAME = Config.BOT_USERNAME
+    TOKEN = config.TOKEN
+    PROJECT_NAME = config.PROJECT_NAME
+    ip_addr = get('https://api.ipify.org').text
+    GIT_REPO_URL = config.GIT_REPO_URL
     try:
         BL_CHATS = {int(x) for x in Config.BL_CHATS or []}
     except ValueError:
