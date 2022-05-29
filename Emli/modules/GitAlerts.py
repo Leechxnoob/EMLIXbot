@@ -5,6 +5,7 @@ from html import escape
 from requests import get, post
 from os import environ
 from Emli.__main__ import  TOKEN
+from Emli import dispatcher
 
 from telegram.ext import (
       CommandHandler,
