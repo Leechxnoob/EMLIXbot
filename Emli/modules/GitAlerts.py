@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from html import escape
 from requests import get, post
 from os import environ
-
+from Emli.__main__ import  TOKEN
 
 from telegram.ext import (
       CommandHandler,
@@ -51,6 +51,40 @@ def more_help(update: Update, context: CallbackContext):
     update.message.reply_photo(photo=image, caption=tt, reply_markup=haha)
 
 
+TG_BOT_API = f'https://api.telegram.org/bot{BOT_TOKEN}/'
+checkbot = get(TG_BOT_API + "getMe").json()
+if not checkbot['ok']:
+    log.error("[ERROR] Invalid Token!")
+    exit(1)
+else:
+    username = checkbot['result']['username']
+    log.info(
+        f"[INFO] Logged in as @{username}, waiting for webhook requests...")
+
+
+def post_tg(chat, message, parse_mode):
+    """Send message to desired group"""
+    response = post(
+        TG_BOT_API + "sendMessage",
+        params={
+            "chat_id": chat,
+            "text": message,
+            "parse_mode": parse_mode,
+            "disable_web_page_preview": True}).json()
+    return response
+
+
+def reply_tg(chat, message_id, message, parse_mode):
+    """reply to message_id"""
+    response = post(
+        TG_BOT_API + "sendMessage",
+        params={
+            "chat_id": chat,
+            "reply_to_message_id": message_id,
+            "text": message,
+            "parse_mode": parse_mode,
+            "disable_web_page_preview": True}).json()
+    return response
 
 
 
