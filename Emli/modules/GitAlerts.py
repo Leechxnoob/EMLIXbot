@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from html import escape
 from requests import get, post
 from os import environ
-from Config import Config
+From Emli import TOKEN
 
 from telegram.ext import (
       CommandHandler,
