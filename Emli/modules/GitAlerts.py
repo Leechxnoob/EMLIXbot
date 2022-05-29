@@ -51,7 +51,7 @@ def more_help(update: Update, context: CallbackContext):
     update.message.reply_photo(photo=image, caption=tt, reply_markup=haha)
 
 
-TG_BOT_API = f'https://api.telegram.org/bot{BOT_TOKEN}/'
+TG_BOT_API = f'https://api.telegram.org/bot{TOKEN}/'
 checkbot = get(TG_BOT_API + "getMe").json()
 if not checkbot['ok']:
     log.error("[ERROR] Invalid Token!")
