@@ -24,26 +24,6 @@ server = Flask(__name__)
 basicConfig(level=INFO)
 log = getLogger()
 
-ENV = bool(environ.get('ENV', False))
-
-if ENV:
-    BOT_TOKEN = environ.get('BOT_TOKEN', None)
-    PROJECT_NAME = environ.get('PROJECT_NAME', None)
-    ip_addr = environ.get('APP_URL', None)
-    GIT_REPO_URL = environ.get('GIT_REPO_URL', "https://github.com/TeamScenario/GitAlerts")
-else:
-    BOT_TOKEN = config.BOT_TOKEN
-    PROJECT_NAME = config.PROJECT_NAME
-    ip_addr = get('https://api.ipify.org').text
-    GIT_REPO_URL = config.GIT_REPO_URL
-
-updater = Updater(token=BOT_TOKEN, workers=1)
-dispatcher = updater.dispatcher
-
-
-
-
-
 def gitconnect(update: Update, context: CallbackContext):
     message = update.effective_message
     text = message.text[len("/gitconnect ") :]
@@ -64,8 +44,8 @@ def more_help(update: Update, context: CallbackContext):
     image = "https://telegra.ph/file/0239f2414d3430c29338f.jpg"
     btn = [
           [
-           InlineKeyboardButton("Updates", url=f"https://t.me/{UPDATES}"),
-           InlineKeyboardButton("Owner", url=f"https://t.me/{DEVELOPER}"),
+           InlineKeyboardButton("Updates⚡", url=f"https://t.me/OMG_info"),
+           InlineKeyboardButton("Owner👨‍💻", url=f"https://t.me/shado_hackers"),
           ],
       ]
     haha = InlineKeyboardMarkup(btn)
