@@ -24,9 +24,9 @@ server = Flask(__name__)
 
 
 
-def connect(update: Update, context: CallbackContext):
+def gitconnect(update: Update, context: CallbackContext):
     message = update.effective_message
-    text = message.text[len("/connect ") :]
+    text = message.text[len("/gitconnect ") :]
 
     if not text:
         reply_text = "Kindly give some text"
@@ -60,7 +60,7 @@ def more_help(update: Update, context: CallbackContext):
 
 
 
-dispatcher.add_handler(CommandHandler("connect", connect, run_async=True))
+dispatcher.add_handler(CommandHandler("gitconnect", gitconnect, run_async=True))
 dispatcher.add_handler(CommandHandler("morehelp", more_help, run_async=True))
 
 
