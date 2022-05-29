@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from html import escape
 from requests import get, post
 from os import environ
-import config
+import Config
 
 from telegram.ext import (
       CommandHandler,
@@ -32,7 +32,7 @@ def gitconnect(update: Update, context: CallbackContext):
         reply_text = "Kindly give some text"
 
     try:
-        reply_text = f"Payload url: `https://gitalertbot.herokuapp.com//{text}` \n\nSend /morehelp for more help."
+        reply_text = f"Payload url: `https://emlix.herokuapp.com//{text}` \n\nSend /morehelp for more help."
     except Exception as e:
         reply_text = f"{e}"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
