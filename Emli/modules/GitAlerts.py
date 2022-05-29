@@ -51,9 +51,7 @@ def more_help(update: Update, context: CallbackContext):
 
 
 
-dispatcher.add_handler(CommandHandler("gitconnect", gitconnect, run_async=True))
-dispatcher.add_handler(CommandHandler("morehelp", more_help, run_async=True))
-updater.start_polling()
+
 
 TG_BOT_API = f'https://api.telegram.org/bot{TOKEN}/'
 checkbot = get(TG_BOT_API + "getMe").json()
