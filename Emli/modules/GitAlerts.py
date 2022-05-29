@@ -23,32 +23,44 @@ server = Flask(__name__)
 
 
 
-def gitconnect(update: Update, context: CallbackContext):
+def connect(update: Update, context: CallbackContext):
     message = update.effective_message
-    text = message.text[len("/gitconnect ") :]
+    text = message.text[len("/connect ") :]
 
     if not text:
         reply_text = "Kindly give some text"
+    x = re.search("^-100", text)
 
-    try:
-        reply_text = f"Payload url: `https://emlix.herokuapp.com//{text}` \n\nSend /morehelp for more help."
-    except Exception as e:
-        reply_text = f"{e}"
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
+    if x:
+        reply_text = f"Payload url: `https://{HEROKU_APPNAME}.herokuapp.com//{text}` \n\nSend /morehelp for more help."
+        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
+    else:
+        reply_texto = "Wrong chat id! it must start with -1001 or -100"
+        message.reply_text(reply_texto)
 
-
+def getSourceCodeLink(_bot, update):
+    """Pulls link to the source code."""
+    message = update.effective_message
+    message.reply_text(
+        f"{GIT_REPO_URL}"
+    )
 
 def more_help(update: Update, context: CallbackContext):
-    tt = "1.Go to repo settings \n2.Find webhooks there \n3.Add Payload url there \n\n4. Change content type to application/json \n\n5.Which events would you like to trigger this webhook? \n• Choose 1st or 2nd option \n\n6. Add webhook \n7. Done!"
+    tt = "1.Go to repo settings \n2.Find webhooks there \n3.Add Payload url there \n\n4. Change content type to application/json \n\n5.Which events would you like to trigger this webhook? \nâ€¢ Choose 1st or 2nd option \n\n6. Add webhook \n7. Done!"
     image = "https://telegra.ph/file/0239f2414d3430c29338f.jpg"
     btn = [
           [
-           InlineKeyboardButton("Updates⚡", url=f"https://t.me/OMG_info"),
-           InlineKeyboardButton("Owner👨‍💻", url=f"https://t.me/shado_hackers"),
+           InlineKeyboardButton("Updates", url=f"https://t.me/OMG_info"),
+           InlineKeyboardButton("Owner", url=f"https://t.me/shado_hackers"),
           ],
       ]
     haha = InlineKeyboardMarkup(btn)
     update.message.reply_photo(photo=image, caption=tt, reply_markup=haha)
+
+
+
+dispatcher.add_handler(CommandHandler("connect", connect, run_async=True))
+dispatcher.add_handler(CommandHandler("morehelp", more_help, run_async=True))
 
 
 TG_BOT_API = f'https://api.telegram.org/bot{TOKEN}/'
