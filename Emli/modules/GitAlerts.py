@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from html import escape
 from requests import get, post
 from os import environ
+from Config import Config
 
 from telegram.ext import (
       CommandHandler,
