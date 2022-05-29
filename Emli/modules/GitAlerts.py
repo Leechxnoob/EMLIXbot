@@ -4,7 +4,6 @@ from flask import Flask, request, jsonify
 from html import escape
 from requests import get, post
 from os import environ
-from Emli import Config
 
 from telegram.ext import (
       CommandHandler,
@@ -21,8 +20,7 @@ from telegram import (
 
 server = Flask(__name__)
 
-basicConfig(level=INFO)
-log = getLogger()
+
 
 def gitconnect(update: Update, context: CallbackContext):
     message = update.effective_message
