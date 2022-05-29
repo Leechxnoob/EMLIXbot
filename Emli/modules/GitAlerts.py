@@ -56,10 +56,6 @@ checkbot = get(TG_BOT_API + "getMe").json()
 if not checkbot['ok']:
     log.error("[ERROR] Invalid Token!")
     exit(1)
-else:
-    username = checkbot['result']['username']
-    log.info(
-        f"[INFO] Logged in as @{username}, waiting for webhook requests...")
 
 
 def post_tg(chat, message, parse_mode):
