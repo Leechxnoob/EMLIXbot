@@ -120,6 +120,15 @@ if ENV:
     MAX_LIST_ELM = os.environ.get("MAX_LIST_ELM", None)
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
     BOT_USERNAME = os.environ.get("BOT_USERNAME", False)
+    TOKEN = environ.get('BOT_TOKEN', None)
+    PROJECT_NAME = environ.get('PROJECT_NAME', None)
+    ip_addr = environ.get('APP_URL', None)
+    GIT_REPO_URL = environ.get('GIT_REPO_URL', "https://github.com/TeamScenario/GitAlerts")
+else:
+    BOT_TOKEN = config.BOT_TOKEN
+    PROJECT_NAME = config.PROJECT_NAME
+    ip_addr = get('https://api.ipify.org').text
+    GIT_REPO_URL = config.GIT_REPO_URL
     try:
         BL_CHATS = set(int(x) for x in os.environ.get("BL_CHATS", "").split())
     except ValueError:
