@@ -7,7 +7,7 @@ from requests import get, post
 from os import environ
 from Emli.__main__ import  TOKEN
 from Emli import dispatcher
-
+from Emli.confing import get_str_key
 from telegram.ext import (
       CommandHandler,
       Updater,
@@ -22,7 +22,7 @@ from telegram import (
 )
 
 server = Flask(__name__)
-
+HEROKU_APP_NAME = get_str_key("HEROKU_APP_NAME", None)
 
 
 def gitconnect(update: Update, context: CallbackContext):
@@ -34,7 +34,7 @@ def gitconnect(update: Update, context: CallbackContext):
     x = re.search("^-100", text)
 
     if x:
-        reply_text = f"Payload url: `https://{HEROKU_APPNAME}.herokuapp.com//{text}` \n\nSend /morehelp for more help."
+        reply_text = f"Payload url: `https://{HEROKU_APP_NAME}.herokuapp.com//{text}` \n\nSend /morehelp for more help."
         message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
     else:
         reply_texto = "Wrong chat id! it must start with -1001 or -100"
