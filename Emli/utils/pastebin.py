@@ -44,11 +44,11 @@ async def paste(content):
 
 from Emli.utils.http import post
 
-BASE = "https://batbin.me/"
+PBASE = "https://batbin.me/"
 
 
 async def bpaste(content: str):
-    resp = await post(f"{BASE}api/v2/paste", data=content)
+    resp = await post(f"{PBASE}api/v2/paste", data=content)
     if not resp["success"]:
         return
-    return BASE + resp["message"]
+    return PBASE + resp["message"]
