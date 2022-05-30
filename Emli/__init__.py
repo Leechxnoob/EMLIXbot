@@ -122,6 +122,8 @@ if ENV:
     BOT_USERNAME = os.environ.get("BOT_USERNAME", False)
     TOKEN = os.environ.get('TOKEN', None)
     PROJECT_NAME = os.environ.get('PROJECT_NAME', None)
+    PORT =  os.environ.get('PORT', 8080))
+    BIND_ADRESS =  os.environ.get('WEB_SERVER_BIND_ADDRESS', '0.0.0.0'))
     ip_addr = os.environ.get('APP_URL', None)
     GIT_REPO_URL = os.environ.get('GIT_REPO_URL', "https://github.com/TeamScenario/GitAlerts")
     try:
