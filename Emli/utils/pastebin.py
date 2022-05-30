@@ -17,9 +17,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+import os
+import re
 import socket
 from asyncio import get_running_loop
 from functools import partial
+from typing import Optional, Dict
+
+import aiofiles
+import aiohttp
+from aiohttp import client_exceptions
 
 
 def _netcat(host, port, content):
@@ -46,6 +53,12 @@ from Emli.utils.http import post
 
 PBASE = "https://batbin.me/"
 
+SBASE = "https://spaceb.in/"
+async def spaste(content: str):
+    resp = await post(f"{SBASE}api/v1/documents", data=content)
+    if not resp["success"]:
+        return
+    return SBASE + resp["message"]
 
 async def bpaste(content: str):
     resp = await post(f"{PBASE}api/v2/paste", data=content)
