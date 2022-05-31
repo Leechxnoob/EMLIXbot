@@ -77,9 +77,9 @@ async def paste_func(_, message):
 
 @app.on_message(filters.command("bpaste") & ~filters.edited)
 @capture_err
-async def paste_func(_, message: Message):
+async def bpaste_func(_, message: Message):
     if not message.reply_to_message:
-        return await eor(message, text="Reply To A Message With /paste")
+        return await eor(message, text="Reply To A Message With /bpaste")
     r = message.reply_to_message
 
     if not r.text and not r.document:
@@ -127,7 +127,7 @@ async def paste_func(_, message: Message):
 
 @app.on_message(filters.command("spaste") & ~filters.edited)
 @capture_err
-async def paste_func(_, message: Message):
+async def spaste_func(_, message: Message):
     if not message.reply_to_message:
         return await eor(message, text="Reply To A Message With /spaste")
     r = message.reply_to_message
