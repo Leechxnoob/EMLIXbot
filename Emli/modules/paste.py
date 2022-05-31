@@ -105,7 +105,7 @@ async def bpaste_func(_, message: Message):
 
         os.remove(doc)
 
-    link = await paste(content)
+    link = await bpaste(content)
     kb = ikb({"Paste Link": link})
     try:
         if m.from_user.is_bot:
@@ -155,7 +155,7 @@ async def spaste_func(_, message: Message):
 
         os.remove(doc)
 
-    link = await paste(content)
+    link = await spaste(content)
     kb = ikb({"Paste Link": link})
     try:
         if m.from_user.is_bot:
