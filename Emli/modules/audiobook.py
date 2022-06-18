@@ -17,7 +17,7 @@ Disclaimer = """ Disclaimer Notice , This Audio Is Generated automatically Throu
 Thanks = """ Thats the End of Your Audio Book, Join Omg_Info on Telegram To find more Interesting bots , And Thanks for Using this Service"""
 
 
-        )
+        
         
 @bughunter0.on_message(filters.command(["audiobook"])) # PdfToText 
 async def pdf_to_text(bot, message):
