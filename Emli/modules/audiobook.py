@@ -8,7 +8,9 @@ from pyrogram.types import User, Message, Document
 from gtts import gTTS
 from Emli import pbot as bughunter0
 
-DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/AudioBoT/")
+from Emli import TMP_DOWNLOAD_DIRECTORY
+
+
 
 Disclaimer = """ Disclaimer Notice , This Audio Is Generated automatically Through AudioBook  plugin in  emli Bot, Join Omg_Info on Telegram for More Bots .     You are Now Listening to your Audio  ."""
   
@@ -21,7 +23,7 @@ Thanks = """ Thats the End of Your Audio Book, Join Omg_Info on Telegram To find
 async def pdf_to_text(bot, message):
  try:
            if message.reply_to_message:
-                pdf_path = DOWNLOAD_LOCATION + f"{message.chat.id}.pdf" #pdfFileObject
+                pdf_path = TMP_DOWNLOAD_DIRECTORY + f"{message.chat.id}.pdf" #pdfFileObject
                 txt = await message.reply("Downloading.....")
                 await message.reply_to_message.download(pdf_path)  
                 await txt.edit("Downloaded File")
