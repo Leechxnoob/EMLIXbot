@@ -8,7 +8,7 @@ from pyrogram.types import User, Message, Document
 from gtts import gTTS
 from Emli import pbot as bughunter0
 
-from Emli import TMP_DOWNLOAD_DIRECTORY
+from Emli import *
 
 
 
