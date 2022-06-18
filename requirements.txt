@@ -6,8 +6,8 @@ gtts
 beautifulsoup4
 Flask
 requests
-python-telegram-bot==13.11
-SQLAlchemy==1.4.36
+python-telegram-bot==13.12
+SQLAlchemy==1.4.37
 psycopg2-binary
 feedparser
 faker
@@ -98,3 +98,4 @@ numpy
 selenium==4.0.0
 hiredis==2.0.0
 pendulum==2.1.2
+PyPDF2
