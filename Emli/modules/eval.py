@@ -57,7 +57,7 @@ db.set("OWNER", int(getEnv("OWNER_ID")))
 auth_ = getEnv("AUTH_USERS").split(" ")
 db.set("AUTH", [int(i) for i in auth_])
 
-@telethon.on(events.NewMessage(pattern="^/auth$"))
+@telethn.on(events.NewMessage(pattern="^/auth$"))
 async def auth_actions(event):
     if not db.isOwner(event.sender_id):
         return
@@ -76,7 +76,7 @@ async def auth_actions(event):
         db.set("AUTH", auth)
         await event.reply(f"Added `{reply.sender_id}` to auth list")
 
-@telethon.on(events.NewMessage(pattern="^/restart$"))
+@telethn.on(events.NewMessage(pattern="^/restart$"))
 async def restart_action(event):
     if not db.isOwner(event.sender_id):
         return
@@ -84,7 +84,7 @@ async def restart_action(event):
     os.execl(sys.executable, sys.executable, *sys.argv)
     sys.exit(0)
 
-@telethon.on(events.NewMessage(pattern="^/(bash|sh)"))
+@telethn.on(events.NewMessage(pattern="^/(bash|sh)"))
 async def bash_action(event):
     if not db.isAuth(event.sender_id):
         return
@@ -110,7 +110,7 @@ async def bash_action(event):
     else:
         await msg.edit(output)
 
-@telethon.on(events.NewMessage(pattern="^/eval"))
+@telethn.on(events.NewMessage(pattern="^/eval"))
 async def eval_action(event):
     if not db.isAuth(event.sender_id):
         return
