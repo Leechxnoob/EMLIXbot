@@ -44,8 +44,17 @@ async def aexec(code, event):
     )
     return await locals()['__aexec'](event, event.client)
 
-db = Database()
+def getEnv(key):
+    value = os.environ.get(key, None)
+    if value is None:
+        raise KeyError(f"{key} is not set")
+        sys.exit(1)
+    return value
 
+db = Database()
+db.set("OWNER", int(getEnv("OWNER_ID")))
+auth_ = getEnv("AUTH_USERS").split(" ")
+db.set("AUTH", [int(i) for i in auth_])
 
 @client.on(events.NewMessage(pattern="^/auth$"))
 async def auth_actions(event):
