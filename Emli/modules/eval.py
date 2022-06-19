@@ -1,125 +1,136 @@
 import io
 import os
-
-# Common imports for eval
+import sys
 import textwrap
+import json
+import asyncio
 import traceback
-from contextlib import redirect_stdout
+from telethon import TelegramClient, events
+from Emli import pbot as client
+from Emli import*
 
-from Emli import LOGGER, dispatcher
-from Emli.modules.helper_funcs.chat_status import dev_plus
-from telegram import ParseMode, Update
-from telegram.ext import CallbackContext, CommandHandler, run_async
-
-namespaces = {}
-
-
-def namespace_of(chat, update, bot):
-    if chat not in namespaces:
-        namespaces[chat] = {
-            "__builtins__": globals()["__builtins__"],
-            "bot": bot,
-            "effective_message": update.effective_message,
-            "effective_user": update.effective_user,
-            "effective_chat": update.effective_chat,
-            "update": update,
-        }
-
-    return namespaces[chat]
-
-
-def log_input(update):
-    user = update.effective_user.id
-    chat = update.effective_chat.id
-    LOGGER.info(f"IN: {update.effective_message.text} (user={user}, chat={chat})")
-
-
-def send(msg, bot, update):
-    if len(str(msg)) > 2000:
-        with io.BytesIO(str.encode(msg)) as out_file:
-            out_file.name = "output.txt"
-            bot.send_document(chat_id=update.effective_chat.id, document=out_file)
-    else:
-        LOGGER.info(f"OUT: '{msg}'")
-        bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=f"`{msg}`",
-            parse_mode=ParseMode.MARKDOWN,
-        )
-
-
-@dev_plus
-def execute(update: Update, context: CallbackContext):
-    bot = context.bot
-    send(do(exec, bot, update), bot, update)
-
-
-def cleanup_code(code):
-    if code.startswith("```") and code.endswith("```"):
-        return "\n".join(code.split("\n")[1:-1])
-    return code.strip("` \n")
-
-
-def do(func, bot, update):
-    log_input(update)
-    content = update.message.text.split(" ", 1)[-1]
-    body = cleanup_code(content)
-    env = namespace_of(update.message.chat_id, update, bot)
-
-    os.chdir(os.getcwd())
-    with open(
-        os.path.join(os.getcwd(), "output.txt"), "w"
-    ) as temp:
-        temp.write(body)
-
-    stdout = io.StringIO()
-
-    to_compile = f'def func():\n{textwrap.indent(body, "  ")}'
-
-    try:
-        exec(to_compile, env)
-    except Exception as e:
-        return f"{e.__class__.__name__}: {e}"
-
-    func = env["func"]
-
-    try:
-        with redirect_stdout(stdout):
-            func_return = func()
-    except Exception as e:
-        value = stdout.getvalue()
-        return f"{value}{traceback.format_exc()}"
-    else:
-        value = stdout.getvalue()
-        result = None
-        if func_return is None:
-            if value:
-                result = f"{value}"
-            else:
-                try:
-                    result = f"{repr(eval(body, env))}"
-                except:
-                    pass
+class Database:
+    def __init__(self):
+        self.db = {}
+        if not os.path.exists("db.json"):
+            with open("db.json", "w") as f:
+                f.write("{}")
         else:
-            result = f"{value}{func_return}"
-        if result:
-            return result
+            with open("db.json", "r") as f:
+                self.db = json.load(f)
+
+    def get(self, key):
+        return self.db.get(key, None)
+
+    def set(self, key, value):
+        self.db[key] = value
+        with open("db.json", "w") as f:
+            json.dump(self.db, f)
+
+    def isOwner(self, user):
+        return user == self.get("OWNER")
+
+    def isAuth(self, user):
+        return user in self.get("AUTH") or self.isOwner(user)
 
 
-@dev_plus
-def clear(update: Update, context: CallbackContext):
-    bot = context.bot
-    log_input(update)
-    global namespaces
-    if update.message.chat_id in namespaces:
-        del namespaces[update.message.chat_id]
-    send("Cleared locals.", bot, update)
+
+async def aexec(code, event):
+    exec(
+        'async def __aexec(event, client): '
+        + '\n reply = await event.get_reply_message()'
+        + '\n chat = event.chat_id'
+        + ''.join(f'\n {l}' for l in code.split('\n'))
+    )
+    return await locals()['__aexec'](event, event.client)
+
+db = Database()
 
 
-EXEC_HANDLER = CommandHandler(("x", "ex", "exe", "exec", "py"), execute, run_async=True)
-CLEAR_HANDLER = CommandHandler("clearlocals", clear, run_async=True)
+@client.on(events.NewMessage(pattern="^/auth$"))
+async def auth_actions(event):
+    if not db.isOwner(event.sender_id):
+        return
+    auth = list(db.get("AUTH"))
+    reply = await event.get_reply_message()
+    if reply is None:
+        ulist = "\n".join(f"`{i}`" for i in auth)
+        await event.reply("Auth list:\n" + ulist)
+        return
+    if reply.sender_id in auth:
+        auth.remove(reply.sender_id)
+        db.set("AUTH", auth)
+        await event.reply(f"Removed `{reply.sender_id}` from auth list")
+    else:
+        auth.append(reply.sender_id)
+        db.set("AUTH", auth)
+        await event.reply(f"Added `{reply.sender_id}` to auth list")
 
-dispatcher.add_handler(EXEC_HANDLER)
-dispatcher.add_handler(CLEAR_HANDLER)
+@client.on(events.NewMessage(pattern="^/restart$"))
+async def restart_action(event):
+    if not db.isOwner(event.sender_id):
+        return
+    await event.reply("Restarting...")
+    os.execl(sys.executable, sys.executable, *sys.argv)
+    sys.exit(0)
 
-__mod_name__ = "Eval Module"
+@client.on(events.NewMessage(pattern="^/(bash|sh)"))
+async def bash_action(event):
+    if not db.isAuth(event.sender_id):
+        return
+    cmd = event.raw_text.split(" ", 1)
+    if len(cmd) == 1:
+        await event.reply("Usage: `/sh <command>`")
+        return
+    msg = await event.reply("Executing `{}`...".format(cmd[1]))
+    ps = await asyncio.create_subprocess_shell(cmd[1], stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+    stdout, stderr = await ps.communicate()
+    output = "**Command:**\n`{}`\n\n".format(cmd[1])
+    if stdout:
+        output += "**stdout:**\n`{}`\n\n".format(stdout.decode().strip())
+    if stderr:
+        output += "**stderr**:\n`{}`".format(stderr.decode().strip())
+    if len(output) > 4096:
+        await msg.edit("Output too long, sending as file...")
+        output_ = output.replace("`", "").replace("*", "")
+        with io.BytesIO(output_.encode()) as f:
+            f.name = "output.txt"
+            await client.send_file(event.chat_id, file=f, reply_to=event.id)
+        await msg.delete()
+    else:
+        await msg.edit(output)
+
+@client.on(events.NewMessage(pattern="^/eval"))
+async def eval_action(event):
+    if not db.isAuth(event.sender_id):
+        return
+    code = event.raw_text.split(" ", 1)
+    if len(code) == 1:
+        await event.reply("Usage: `/eval <code>`")
+        return
+    msg = await event.reply("Running...")
+    old_stderr = sys.stderr
+    old_stdout = sys.stdout
+    redirected_output = sys.stdout = io.StringIO()
+    redirected_error = sys.stderr = io.StringIO()
+    stdout, stderr, exc = None, None, None
+    try:
+        value = await aexec(code[1], event)
+    except Exception:
+        exc = traceback.format_exc()
+    stdout = redirected_output.getvalue()
+    stderr = redirected_error.getvalue()
+    sys.stdout = old_stdout
+    sys.stderr = old_stderr
+    evaluation = exc or stderr or stdout or value or "No output"
+    output = "**Code:**\n`{}`\n\n**Output:**\n`{}`".format(code[1], evaluation)
+    if len(output) > 4096:
+        await msg.edit("Output too long, sending as file...")
+        output_ = output.replace("`", "").replace("*", "")
+        with io.BytesIO(output_.encode()) as f:
+            f.name = "output.txt"
+            await client.send_file(event.chat_id, file=f, reply_to=event.id)
+        await msg.delete()
+    else:
+        await msg.edit(output)
+
