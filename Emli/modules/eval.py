@@ -6,9 +6,10 @@ import json
 import asyncio
 import traceback
 from telethon import TelegramClient, events
-from Emli import pbot
 from Emli import*
-from Emli import telethon
+from Emli import telethn,  TEMP_DOWNLOAD_DIRECTORY, SUPPORT_CHAT 
+from Emli import pbot
+
 class Database:
     def __init__(self):
         self.db = {}
@@ -56,7 +57,7 @@ db.set("OWNER", int(getEnv("OWNER_ID")))
 auth_ = getEnv("AUTH_USERS").split(" ")
 db.set("AUTH", [int(i) for i in auth_])
 
-@pbot.on(events.NewMessage(pattern="^/auth$"))
+@telethon.on(events.NewMessage(pattern="^/auth$"))
 async def auth_actions(event):
     if not db.isOwner(event.sender_id):
         return
@@ -75,7 +76,7 @@ async def auth_actions(event):
         db.set("AUTH", auth)
         await event.reply(f"Added `{reply.sender_id}` to auth list")
 
-@pbot.on(events.NewMessage(pattern="^/restart$"))
+@telethon.on(events.NewMessage(pattern="^/restart$"))
 async def restart_action(event):
     if not db.isOwner(event.sender_id):
         return
@@ -83,7 +84,7 @@ async def restart_action(event):
     os.execl(sys.executable, sys.executable, *sys.argv)
     sys.exit(0)
 
-@pbot.on(events.NewMessage(pattern="^/(bash|sh)"))
+@telethon.on(events.NewMessage(pattern="^/(bash|sh)"))
 async def bash_action(event):
     if not db.isAuth(event.sender_id):
         return
@@ -109,7 +110,7 @@ async def bash_action(event):
     else:
         await msg.edit(output)
 
-@pbot.on(events.NewMessage(pattern="^/eval"))
+@telethon.on(events.NewMessage(pattern="^/eval"))
 async def eval_action(event):
     if not db.isAuth(event.sender_id):
         return
