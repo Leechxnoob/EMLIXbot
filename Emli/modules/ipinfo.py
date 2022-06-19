@@ -8,7 +8,7 @@ from functools import partial
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from Emli import pbot as app
 
-
+command = partial(filters.command, prefixes=["!", "/", "."])
 
 
 @app.on_message(command("ipinfo"))
