@@ -6,9 +6,9 @@ import json
 import asyncio
 import traceback
 from telethon import TelegramClient, events
-from Emli import pbot as client
+from Emli import pbot
 from Emli import*
-
+from Emli import telethon
 class Database:
     def __init__(self):
         self.db = {}
@@ -56,7 +56,7 @@ db.set("OWNER", int(getEnv("OWNER_ID")))
 auth_ = getEnv("AUTH_USERS").split(" ")
 db.set("AUTH", [int(i) for i in auth_])
 
-@client.on(events.NewMessage(pattern="^/auth$"))
+@pbot.on(events.NewMessage(pattern="^/auth$"))
 async def auth_actions(event):
     if not db.isOwner(event.sender_id):
         return
@@ -75,7 +75,7 @@ async def auth_actions(event):
         db.set("AUTH", auth)
         await event.reply(f"Added `{reply.sender_id}` to auth list")
 
-@client.on(events.NewMessage(pattern="^/restart$"))
+@pbot.on(events.NewMessage(pattern="^/restart$"))
 async def restart_action(event):
     if not db.isOwner(event.sender_id):
         return
@@ -83,7 +83,7 @@ async def restart_action(event):
     os.execl(sys.executable, sys.executable, *sys.argv)
     sys.exit(0)
 
-@client.on(events.NewMessage(pattern="^/(bash|sh)"))
+@pbot.on(events.NewMessage(pattern="^/(bash|sh)"))
 async def bash_action(event):
     if not db.isAuth(event.sender_id):
         return
@@ -104,12 +104,12 @@ async def bash_action(event):
         output_ = output.replace("`", "").replace("*", "")
         with io.BytesIO(output_.encode()) as f:
             f.name = "output.txt"
-            await client.send_file(event.chat_id, file=f, reply_to=event.id)
+            await pbot.send_file(event.chat_id, file=f, reply_to=event.id)
         await msg.delete()
     else:
         await msg.edit(output)
 
-@client.on(events.NewMessage(pattern="^/eval"))
+@pbot.on(events.NewMessage(pattern="^/eval"))
 async def eval_action(event):
     if not db.isAuth(event.sender_id):
         return
@@ -138,7 +138,7 @@ async def eval_action(event):
         output_ = output.replace("`", "").replace("*", "")
         with io.BytesIO(output_.encode()) as f:
             f.name = "output.txt"
-            await client.send_file(event.chat_id, file=f, reply_to=event.id)
+            await pbot.send_file(event.chat_id, file=f, reply_to=event.id)
         await msg.delete()
     else:
         await msg.edit(output)
