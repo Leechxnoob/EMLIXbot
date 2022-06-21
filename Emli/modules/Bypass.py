@@ -11,7 +11,7 @@ from pyrogram.types import Update
 
 
 # eg: https://gplinks.co/XXXX
-url = ""
+url = "https://gplinks.co/YqYAQA"
 
 # =======================================
 @pbot.on_message(filters.command("bypass"))
