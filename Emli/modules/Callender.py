@@ -5,7 +5,7 @@ from pyrogram import Message
 from Emli import pbot
 
 
-@app.on_message(filters.command("callender"))
+@pbot.on_message(filters.command("callender"))
 async def _calendar(message: Message):):
     if message.reply_to_message
      if not message.input_str:
