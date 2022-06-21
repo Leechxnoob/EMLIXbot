@@ -15,6 +15,34 @@ url = "https://gplinks.co/YqYAQA"
 
 # =======================================
 @pbot.on_message(filters.command("bypass"))
+async def bypass(c: Client, update: Update):
+    if not len(update.command) == 2:
+        m = "Usage: `/bypass <url>`"
+        await update.reply_text(
+            parse_mode="md",
+            text=m)
+        return
+
+    text = update.command[1]
+    if text:
+        links = re.final_url(r'\bhttps?://.*\.\S+', text)
+    else:
+        return
+    reply = []
+    if not links:
+        await update.reply_text("No links found!")
+        return
+    for link in links:
+        if 'https://gplinks.co' in link:
+            reply.append(gplink(link))
+        else:
+            reply.append(re.final_url(
+                r"\bhttps?://(.*?[^/]+)", link)[0] + ' is not supported')
+
+    await update.reply_text("\n".join(reply))
+
+
+
 def gplinks_bypass(url: str):
     client = cloudscraper.create_scraper(allow_brotli=False)
     p = urlparse(url)
