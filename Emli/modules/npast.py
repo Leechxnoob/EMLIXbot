@@ -35,7 +35,7 @@ def npaste(update: Update, context: CallbackContext):
     )
 
 
-PASTE_HANDLER = DisableAbleCommandHandler("npaste", paste, run_async=True)
+PASTE_HANDLER = DisableAbleCommandHandler("npaste", npaste, run_async=True)
 dispatcher.add_handler(PASTE_HANDLER)
 
 __command_list__ = ["npaste"]
