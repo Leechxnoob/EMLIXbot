@@ -104,4 +104,5 @@ def status(update: Update, context: CallbackContext):
         disable_web_page_preview = True,
     )
 
-
+STATUS_HANDLER = DisableAbleCommandHandler("status", status, run_async=True)
+dispatcher.add_handler(STATUS_HANDLER)
