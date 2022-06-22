@@ -6,13 +6,12 @@ from json import JSONDecodeError
 
 
 
-from Emli.utils.permissions import admins_only, edit_or_reply
+from Emli.utils.permissions import  edit_or_reply
 from Emli.utils.pluginhelpers import  fetch_audio
 from Emli import pgram, BOT_USERNAME, SUPPORT_CHAT, BOT_NAME
 from Emli import pbot as pgram
 
 @pgram.on_message(filters.command(["identify", "shazam", f"shazam@{BOT_USERNAME}"]))
-@admins_only
 async def shazamm(client, message):
     kek = await edit_or_reply(message, "`Shazaming In Progress!`")
     if not message.reply_to_message:
