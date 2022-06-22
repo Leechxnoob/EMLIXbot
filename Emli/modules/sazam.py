@@ -8,7 +8,7 @@ from json import JSONDecodeError
 
 from Emli.utils.permissions import  edit_or_reply
 from Emli.utils.pluginhelper import  fetch_audio
-from Emli import  BOT_USERNAME, SUPPORT_CHAT, BOT_NAME
+from Emli import  BOT_USERNAME, SUPPORT_CHAT
 from Emli import pbot as pgram
 
 @pgram.on_message(filters.command(["identify", "shazam", f"shazam@{BOT_USERNAME}"]))
@@ -22,7 +22,7 @@ async def shazamm(client, message):
     kkk = await fetch_audio(client, message)
     downloaded_file_name = kkk
     f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
-    await kek.edit(f"**Searching For This Song In {BOT_NAME}'s DataBase.**")
+    await kek.edit(f"**Searching For This Song In EMLI's DataBase.**")
     r = requests.post("https://starkapi.herokuapp.com/shazam/", files=f)
     try:
         xo = r.json()
