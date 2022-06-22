@@ -7,8 +7,8 @@ from json import JSONDecodeError
 
 
 from Emli.utils.permissions import  edit_or_reply
-from Emli.utils.pluginhelpers import  fetch_audio
-from Emli import pgram, BOT_USERNAME, SUPPORT_CHAT, BOT_NAME
+from Emli.utils.pluginhelper import  fetch_audio
+from Emli import  BOT_USERNAME, SUPPORT_CHAT, BOT_NAME
 from Emli import pbot as pgram
 
 @pgram.on_message(filters.command(["identify", "shazam", f"shazam@{BOT_USERNAME}"]))
