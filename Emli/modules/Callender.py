@@ -7,7 +7,7 @@ from Emli import pbot
 from pyrogram import Client
 
 @pbot.on_message(filters.command("callender"))
-async def _calendar(message: Message):
+async def calendar(message: Message):
     if message.reply_to_message:
      if not message.input_str:
         await message.edit("`Searching...`")
