@@ -28,7 +28,7 @@ Thanks = """ Thats the End of Your Audio Book, Join Omg_Info on Telegram To find
 async def pdf_to_text(bot, message):
  try:
            if message.reply_to_message:
-                pdf_path = TMP_DOWNLOAD_DIRECTORY + f"{message.chat.id}.pdf" #pdfFileObject
+                pdf_path = DOWNLOAD_LOCATION + f"{message.chat.id}.pdf" #pdfFileObject
                 txt = await message.reply("Downloading.....")
                 await message.reply_to_message.download(pdf_path)  
                 await txt.edit("Downloaded File")
