@@ -51,9 +51,7 @@ async def pdf_to_text(bot, message):
                       await bot.send_voice(chat_id, speech, caption ="@Omg_Info",reply_markup=CHANNEL_BUTTON)   
                 await txt.edit("Join @nexleech")    
                 os.remove(pdf_path)  
-                
-                
-           else :
+            else :
                 await message.reply("Please Reply to PDF file")
  except Exception as error :
            print(error)
