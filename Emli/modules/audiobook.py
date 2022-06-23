@@ -10,6 +10,11 @@ from Emli import pbot as bughunter0
 
 from Emli import *
 
+CHANNEL_BUTTON = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('↗ Join Here ↗', url='https://t.me/OMG_info')
+        ]]
+    )
 
 
 Disclaimer = """ Disclaimer Notice , This Audio Is Generated automatically Through AudioBook  plugin in  emli Bot, Join Omg_Info on Telegram for More Bots .     You are Now Listening to your Audio  ."""
@@ -48,10 +53,12 @@ async def pdf_to_text(bot, message):
                 tts_file = gTTS(text=output_text, lang=language, slow=False) 
                 tts_file.save(f"{message.chat.id}.mp3")      
                 with open(f"{message.chat.id}.mp3", "rb") as speech:
-                      await bot.send_voice(chat_id, speech, caption ="@Omg_Info",reply_markup=CHANNEL_BUTTON)   
+                      await bot.send_voice(chat_id, speech, caption ="@omg_info",reply_markup=CHANNEL_BUTTON)   
                 await txt.edit("Join @nexleech")    
                 os.remove(pdf_path)  
-            else:
+                
+                
+           else :
                 await message.reply("Please Reply to PDF file")
  except Exception as error :
            print(error)
