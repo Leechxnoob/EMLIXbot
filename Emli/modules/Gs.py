@@ -5,7 +5,8 @@ from pyrogram import Client, filters
 from pyrogram.types import *
 from Emli import pbot 
 from Emli.utils.errors import capture_err
-
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
 
 API = "https://api.safone.tech/google?query="
 
