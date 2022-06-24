@@ -1,4 +1,3 @@
-
 import os
 import requests
 from requests.utils import requote_uri
@@ -10,7 +9,7 @@ API = "https://api.safone.tech/google?query="
 
 
 @pbot.on_message(filters.command("gs"))
-async def google(query):
+ def google(query):
     r = requests.get(API + requote_uri(query))
     informations = r.json()["results"]
     results = []
