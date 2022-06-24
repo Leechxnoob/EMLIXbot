@@ -4,12 +4,16 @@ from requests.utils import requote_uri
 from pyrogram import Client, filters
 from pyrogram.types import *
 from Emli import pbot 
+from Emli.utils.errors import capture_err
+
 
 API = "https://api.safone.tech/google?query="
 
 
 @pbot.on_message(filters.command("gs"))
- def google(query):
+@capture_err
+ async def google(_, message):
+    if not message.reply_to_message:
     r = requests.get(API + requote_uri(query))
     informations = r.json()["results"]
     results = []
