@@ -13,7 +13,7 @@ API = "https://api.safone.tech/google?query="
 
 @pbot.on_message(filters.command("gs"))
 @capture_err
- async def google(_, message):
+ async def google(client, message):
     if not message.reply_to_message:
     r = requests.get(API + requote_uri(query))
     informations = r.json()["results"]
