@@ -6,7 +6,7 @@ from pyrogram.types import Message
 from Emli import pbot
 from pyrogram import Client
 
-@pbot.on_message(filters.command("callender"))
+@pbot.on_message(filters.command("calendar"))
 def calendar(message: Message):
     if message.reply_to_message:
      if not message.input_str:
