@@ -37,7 +37,7 @@ async def on_off_antiarab(_, message: Message):
 
 
 @app.on_message(
-    filters.command("gs") & ~filters.edited & ~filters.bot 
+    filters.command("google") & ~filters.edited & ~filters.bot 
 )
 async def google(_, message: Message):
     gsearch_msg = await edit_or_reply(message, "`Processing...`")
