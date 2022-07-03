@@ -9,7 +9,7 @@ from pyrogram import Client
 @pbot.on_message(filters.command("calendar"))
 def calendar(message: Message):
     if message.reply_to_message:
-     if not message.input_str:
+    if not message.input_str:
         await message.edit("`Searching...`")
         try:
             today = datetime.today()
