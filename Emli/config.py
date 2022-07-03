@@ -74,6 +74,9 @@ class Config(object):
     VIRUS_API_KEY = "awoo" # For scan file , get one from  https://www.virustotal.com/gui/join-us
     BL_CHATS = []  # List of groups that you want blacklisted.
     SPAMMERS = None
+    # OCR Space API Key for .ocr command
+    # Get from https://ocr.space/ocrapi
+    OCR_SPACE_API_KEY = ""
 
 
 class Production(Config):
