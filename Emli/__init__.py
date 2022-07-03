@@ -100,6 +100,9 @@ if ENV:
     DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/AudioBoT/")
     STRICT_GBAN = bool(os.environ.get("STRICT_GBAN", False))
     WORKERS = int(os.environ.get("WORKERS", 8))
+    # OCR Space API Key for .ocr command
+    # Get from https://ocr.space/ocrapi
+    OCR_SPACE_API_KEY = ""
     BAN_STICKER = os.environ.get("BAN_STICKER", "CAADAgADOwADPPEcAXkko5EB3YGYAg")
     ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)
     CASH_API_KEY = os.environ.get("CASH_API_KEY", None)
@@ -199,7 +202,7 @@ else:
     SUPPORT_CHAT = Config.SUPPORT_CHAT
     SPAMWATCH_SUPPORT_CHAT = Config.SPAMWATCH_SUPPORT_CHAT
     SPAMWATCH_API = Config.SPAMWATCH_API
-    #SESSION_STRING = Config.SESSION_STRING
+    OCR_SPACE_API_KEY =Config.OCR_SPACE_API_KEY
     INFOPIC = Config.INFOPIC
     BOT_USERNAME = Config.BOT_USERNAME
     GOOGLE_CHROME_BIN = Config.GOOGLE_CHROME_BIN
