@@ -28,10 +28,10 @@ class Config(object):
     )  # Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
 
     # RECOMMENDED
-    TOKEN = config.TOKEN
-    PROJECT_NAME = config.PROJECT_NAME
+    TOKEN = ""
+    PROJECT_NAME = ""
     ip_addr = get('https://api.ipify.org').text
-    GIT_REPO_URL = config.GIT_REPO_URL
+    GIT_REPO_URL = ""
     GOOGLE_CHROME_BIN = "/usr/bin/google-chrome"
     CHROME_DRIVER = "/usr/bin/chromedriver"
     SQLALCHEMY_DATABASE_URI = "something://somewhat:user@hosturl:port/databasename"  # needed for any database modules
