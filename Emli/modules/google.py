@@ -214,60 +214,33 @@ async def apk(e):
         app_name = e.pattern_match.group(1)
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
-        page = requests.get(
-            "https://play.google.com/store/search?q=" + final_name + "&c=apps"
-        )
-        lnk = str(page.status_code)
-        soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
-        results = soup.findAll("div", "ZmHEEd")
-        app_name = (
-            results[0].findNext("div", "Vpfmgd").findNext("div", "WsMG1c nnK0zc").text
-        )
-        app_dev = results[0].findNext("div", "Vpfmgd").findNext("div", "KoLSrc").text
+        async with aiohttp.ClientSession() as ses, ses.get(
+                f"https://play.google.com/store/search?q={app_name}&c=apps") as res:
+            result = BeautifulSoup(await res.text(), "lxml")
+
+        found = result.find("div", class_="vWM94c")
+        if found:
+            app_name = found.text
+            app_dev = result.find("div", class_="LbQbAe").text
+            app_rating = result.find("div", class_="TT9eCd").text.replace("star", "")
+            _app_link = result.find("a", class_="Qfxief")['href']
+            app_icon = result.find("img", class_="T75of bzqKMd")['src']
+        else:
+            app_name = result.find("span", class_="DdYX5").text
+            app_dev = result.find("span", class_="wMUdtb").text
+            app_rating = result.find("span", class_="w2kbF").text
+            _app_link = result.find("a", class_="Si6A0c Gy4nib")['href']
+            app_icon = result.find("img", class_="T75of stzEZd")['src']
         app_dev_link = (
-            "https://play.google.com"
-            + results[0].findNext("div", "Vpfmgd").findNext("a", "mnKHRc")["href"]
+            "https://play.google.com/store/apps/developer?id="
+            + app_dev.replace(" ", "+")
         )
-        app_rating = (
-            results[0]
-            .findNext("div", "Vpfmgd")
-            .findNext("div", "pf5lIe")
-            .find("div")["aria-label"]
-        )
-        app_link = (
-            "https://play.google.com"
-            + results[0]
-            .findNext("div", "Vpfmgd")
-            .findNext("div", "vU6FJ p63iDd")
-            .a["href"]
-        )
-        app_icon = (
-            results[0]
-            .findNext("div", "Vpfmgd")
-            .findNext("div", "uzcko")
-            .img["data-src"]
-        )
-        app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
-        app_details += " <b>" + app_name + "</b>"
-        app_details += (
-            "\n\n<code>Developer :</code> <a href='"
-            + app_dev_link
-            + "'>"
-            + app_dev
-            + "</a>"
-        )
-        app_details += "\n<code>Rating :</code> " + app_rating.replace(
-            "Rated ", "⭐ "
-        ).replace(" out of ", "/").replace(" stars", "", 1).replace(
-            " stars", "⭐ "
-        ).replace(
-            "five", "5"
-        )
-        app_details += (
-            "\n<code>Features :</code> <a href='"
-            + app_link
-            + "'>View in Play Store</a>"
-        )
+        app_link = "https://play.google.com" + _app_link
+
+        app_details = f"[📲]({app_icon}) **{app_name}**\n\n"
+        app_details += f"`Developer :` [{app_dev}]({app_dev_link})\n"
+        app_details += f"`Rating :` {app_rating} ⭐️\n"
+        app_details += f"`Features :` [View in Play Store]({app_link})"
         app_details += "\n\n===> Emili <==="
         await e.reply(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
