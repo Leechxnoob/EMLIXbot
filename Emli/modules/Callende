@@ -20,4 +20,4 @@ async def _(event):
         input_ = calendar.month(today.year, today.month)
         await edit.edit(f"```{input_}```")
     except Exception as err:
-        await event.reply("Exception Occured:- " + str(err))")
+        await event.reply("Exception Occured:- " + str(err))
