@@ -89,7 +89,7 @@ PyYAML
 humanize
 python-rapidjson
 covid
-imdbpy
+imdbpy==2021.4.18
 pytesseract~=0.3.8
 pygments
 multicolorcaptcha
