@@ -6,8 +6,8 @@ gtts
 beautifulsoup4
 Flask
 requests
-python-telegram-bot==13.12
-SQLAlchemy==1.4.37
+python-telegram-bot==13.13
+SQLAlchemy==1.4.39
 psycopg2-binary
 feedparser
 faker
@@ -59,7 +59,7 @@ html2text
 bs4
 pySmartDL
 bing_image_downloader
-search_engine_parser
+search-engine-parser>=0.6.6
 pytz
 jikanpy
 tswift
