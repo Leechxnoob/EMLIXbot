@@ -58,7 +58,7 @@ countryinfo
 html2text
 bs4
 pySmartDL
-bing_image_downloader
+bing-image-downloader==1.1.2
 search-engine-parser>=0.6.6
 pytz
 jikanpy
