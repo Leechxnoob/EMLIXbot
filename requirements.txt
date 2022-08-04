@@ -59,7 +59,7 @@ html2text
 bs4
 pySmartDL==1.3.4
 bing-image-downloader==1.1.2
-search-engine-parser>=0.6.6
+search-engine-parser==0.6.7
 pytz
 jikanpy
 tswift
