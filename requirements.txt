@@ -57,7 +57,7 @@ emoji-country-flag
 countryinfo
 html2text
 bs4
-pySmartDL
+pySmartDL==1.3.4
 bing-image-downloader==1.1.2
 search-engine-parser>=0.6.6
 pytz
