@@ -4,6 +4,7 @@ import os
 import requests
 
 from Emli import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
+from Emli import *
 from Emli.events import register
 
 
