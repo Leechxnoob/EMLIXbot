@@ -12,7 +12,7 @@ from Emli.events import register
 async def torrent(event):
     await event.edit("**Searching...**")
     query = event.pattern_match.group(1)
-    response = requests.get(f"https://api.sumanjay.cf/torrent/?query={query}")
+    response = requests.get(f"https://some-random-api.herokuapp.com/1337x?q={query}")
     try:
         ts = json.loads(response.text)
     except json.decoder.JSONDecodeError:
